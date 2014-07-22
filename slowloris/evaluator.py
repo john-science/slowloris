@@ -14,6 +14,42 @@ making your work a bit easier. (We're supposed to get through this thing
 in a day, after all.)
 """
 
+
 def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment."""
-    raise NotImplementedError("DIY")
+    """
+    possibilities:
+        list, where the first element is an operator
+        string / int / float / boolean / some type -> just return it
+    
+    if list:
+        if quote - > return stuff to the right, possibly pretty it up some
+        if atom -> no idea... something
+        if eq -> Just boolean test? Or something more?
+        if +,-,*,/,mod,>,<,= -> perform calc
+    
+    TODO: What's with this Environment object?
+    
+    """
+    # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
+    if type(ast) == list:
+        if ast[0] == 'quote':
+            if len(ast) > 2:
+                raise LispError('quote only takes one argument.')
+            return ast[1]
+        elif ast[0] == 'atom':
+            if len(ast) > 2:
+                raise LispError('atom only takes one argument.')
+            return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
+        elif ast[0] == 'eq':
+            if len(ast) > 3:
+                raise LispError('eq only takes two arguments.')
+            if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:
+                return False
+            else:
+                return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
+        else:
+            pass
+    else:
+        return ast
+
