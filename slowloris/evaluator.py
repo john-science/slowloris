@@ -16,20 +16,9 @@ in a day, after all.)
 
 
 def evaluate(ast, env):
-    """Evaluate an Abstract Syntax Tree in the specified environment."""
-    """
-    possibilities:
-        list, where the first element is an operator
-        string / int / float / boolean / some type -> just return it
+    """Evaluate an Abstract Syntax Tree in the specified environment.
     
-    if list:
-        if quote - > return stuff to the right, possibly pretty it up some
-        if atom -> no idea... something
-        if eq -> Just boolean test? Or something more?
-        if +,-,*,/,mod,>,<,= -> perform calc
-    
-    TODO: What's with this Environment object?
-    
+    TODO: What is with this Environment object?
     """
     # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
     if type(ast) == list:
@@ -48,8 +37,23 @@ def evaluate(ast, env):
                 return False
             else:
                 return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
-        else:
+        elif ast[0] == '+':
             pass
-    else:
-        return ast
+        elif ast[0] == '-':
+            pass
+        elif ast[0] == '*':
+            pass
+        elif ast[0] == '/':
+            pass
+        elif ast[0] == 'mod':
+            pass
+        elif ast[0] == '<':
+            pass
+        elif ast[0] == '=':
+            pass
+        elif ast[0] == '>':
+            pass
+            
+    
+    return ast
 
