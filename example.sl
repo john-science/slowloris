@@ -1,13 +1,12 @@
-;; Some example lisp code. By the end of the tutorial, our Lisp will be
-;; able to run this.
+;; Some example Slow Loris-lisp code.
 
-;; To run the code:
+;; To execute the code:
 ;;
 ;;    ./sl example.sl
 ;;
 
 (define fact 
-    ;; Factorial function
+    ;; This is a Factorial function
     (lambda (n) 
         (if (eq n 0) 
             1 ; Factorial of 0 is 1
