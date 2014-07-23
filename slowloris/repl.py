@@ -17,14 +17,14 @@ def repl():
     print
     print "                 " + faded("                             \`.    T       ")
     print "    Welcome to   " + faded("   .--------------.___________) \   |    T  ")
-    print "   the DIY-lisp  " + faded("   |//////////////|___________[ ]   !  T |  ")
+    print "  the Slow Loris " + faded("   |//////////////|___________[ ]   !  T |  ")
     print "       REPL      " + faded("   `--------------'           ) (      | !  ")
     print "                 " + faded("                              '-'      !    ")
     print faded("  use ^D to exit")
     print
 
     env = Environment()
-    interpret_file(join(dirname(relpath(__file__)), '..', 'stdlib.diy'), env)
+    interpret_file(join(dirname(relpath(__file__)), '..', 'stdlib.sl'), env)
     while True:
         try:
             source = read_expression()
