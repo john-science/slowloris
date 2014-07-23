@@ -28,16 +28,22 @@ def evaluate(ast, env):
                 raise LispError('quote only takes one argument.')  # TODO: does this cut off the rest of my AST?
             return ast[1]
         elif ast[0] == 'atom':
-            if len(ast) > 2:
+            if len(ast) > 2:  # TODO: does this cut off the rest of my AST?
                 raise LispError('atom only takes one argument.')
             return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
         elif ast[0] == 'eq':
-            if len(ast) > 3:
+            if len(ast) > 3:  # TODO: does this cut off the rest of my AST?
                 raise LispError('eq only takes two arguments.')
             if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:
                 return False
             else:
                 return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
+        elif ast[0] == 'if':
+            # TODO: Part 3, this is where I stopped for the night.
+            if evaluate(ast[1]) == True:
+                return evaluate(ast[2])
+            else:
+                return evaluate(ast[3])
         elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
             if type(ast[1]) != type(ast[2]):
                 if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
