@@ -13,6 +13,7 @@ A score of useful functions is provided for you, as per the above imports,
 making your work a bit easier. (We're supposed to get through this thing 
 in a day, after all.)
 """
+operators = {}
 
 
 def evaluate(ast, env):
@@ -24,7 +25,7 @@ def evaluate(ast, env):
     if type(ast) == list:
         if ast[0] == 'quote':
             if len(ast) > 2:
-                raise LispError('quote only takes one argument.')
+                raise LispError('quote only takes one argument.')  # TODO: does this cut off the rest of my AST?
             return ast[1]
         elif ast[0] == 'atom':
             if len(ast) > 2:
@@ -37,23 +38,26 @@ def evaluate(ast, env):
                 return False
             else:
                 return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
-        elif ast[0] == '+':
-            pass
-        elif ast[0] == '-':
-            pass
-        elif ast[0] == '*':
-            pass
-        elif ast[0] == '/':
-            pass
-        elif ast[0] == 'mod':
-            pass
-        elif ast[0] == '<':
-            pass
-        elif ast[0] == '=':
-            pass
-        elif ast[0] == '>':
-            pass
-            
+        else:
+            if type(ast[1]) != type(ast[2]):
+                if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
+                    raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
+            if ast[0] == '+':  # TODO: Verify this will work: (+ (+ 1 2) (+ 3 4))
+                return ast[1] + ast[2]  # TODO: Am I cutting off the rest of the AST?
+            elif ast[0] == '-':
+                return ast[1] - ast[2]
+            elif ast[0] == '*':
+                return ast[1] * ast[2]
+            elif ast[0] == '/':
+                return ast[1] / ast[2]
+            elif ast[0] == 'mod':
+                return ast[1] % ast[2]  # TODO: Am I cutting off the rest of the AST?
+            elif ast[0] == '<':
+                return ast[1] < ast[2]
+            elif ast[0] == '=':
+                return ast[1] == ast[2]
+            elif ast[0] == '>':
+                return ast[1] > ast[2]
     
     return ast
 
