@@ -1,6 +1,6 @@
 ## Slow Loris
 
-> A fork of DIY-LISP. The goal is to learn.
+> A clone of DIY-LISP. The goal is to learn.
 
 ### What Slow Loris will be
 
