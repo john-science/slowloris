@@ -38,7 +38,7 @@ def evaluate(ast, env):
                 return False
             else:
                 return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
-        elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '>']:
+        elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
             if type(ast[1]) != type(ast[2]):
                 if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
                     raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
@@ -57,6 +57,8 @@ def evaluate(ast, env):
                 return ast[1] < ast[2]
             elif ast[0] == '=':
                 return ast[1] == ast[2]
+            elif ast[0] == '!=':
+                return ast[1] != ast[2]
             elif ast[0] == '>':
                 return ast[1] > ast[2]
     
