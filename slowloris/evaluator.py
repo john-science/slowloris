@@ -38,10 +38,11 @@ def evaluate(ast, env):
                 return False
             else:
                 return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
-        else:
+        elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '>']:
             if type(ast[1]) != type(ast[2]):
                 if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
                     raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
+
             if ast[0] == '+':  # TODO: Verify this will work: (+ (+ 1 2) (+ 3 4))
                 return ast[1] + ast[2]  # TODO: Am I cutting off the rest of the AST?
             elif ast[0] == '-':
