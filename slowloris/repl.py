@@ -14,35 +14,30 @@ import readline
 
 def repl():
     """Start the interactive Read-Eval-Print-Loop"""
-    print
-    print "                 " + faded("                             \`.    T       ")
-    print "    Welcome to   " + faded("   .--------------.___________) \   |    T  ")
-    print "  the Slow Loris " + faded("   |//////////////|___________[ ]   !  T |  ")
-    print "       REPL      " + faded("   `--------------'           ) (      | !  ")
-    print "                 " + faded("                              '-'      !    ")
-    print faded("  use ^D to exit")
-    print
+    print("                 " + faded("                             \`.    T       "))
+    print("    Welcome to   " + faded("   .--------------.___________) \   |    T  "))
+    print("  the Slow Loris " + faded("   |//////////////|___________[ ]   !  T |  "))
+    print("       REPL      " + faded("   `--------------'           ) (      | !  "))
+    print("                 " + faded("                              '-'      !    "))
+    print(faded("  use ^D to exit\n"))
 
     env = Environment()
     interpret_file(join(dirname(relpath(__file__)), '..', 'stdlib.sl'), env)
     while True:
         try:
             source = read_expression()
-            print interpret(source, env)
+            print(interpret(source, env))
         except LispError, e:
-            print colored("!", "red"),
-            print faded(str(e.__class__.__name__) + ":"),
-            print str(e)
+            print(colored("! ", "red") + faded(str(e.__class__.__name__) + ":") + str(e))
         except KeyboardInterrupt:
             msg = "Interupted. " + faded("(Use ^D to exit)")
-            print "\n" + colored("! ", "red") + msg
+            print("\n" + colored("! ", "red") + msg)
         except EOFError:
-            print faded("\nBye! o/")
+            print(faded("\nBye!"))
             sys.exit(0)
         except Exception, e:
-            print colored("! ", "red") + faded("The Python is showing through…")
-            print faded("  " + str(e.__class__.__name__) + ":"),
-            print str(e)
+            print(colored("! ", "red") + faded("The Python is showing through…"))
+            print(faded("  " + str(e.__class__.__name__) + ":") + str(e))
 
 def read_expression():
     "Read from stdin until we have at least one s-expression"
