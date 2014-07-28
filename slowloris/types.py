@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 
 """
 This module holds some types we'll have use for along the way.
@@ -25,10 +26,17 @@ class Environment:
         self.variables = variables if variables else {}
 
     def lookup(self, symbol):
-        raise NotImplementedError("DIY")
+        if symbol not in self.variables:
+            raise LispError('%s not in the environment.' % str(symbol))
+        return self.variables[symbol]
 
     def extend(self, variables):
-        raise NotImplementedError("DIY")
+        vs = Environment(copy.deepcopy(self.variables))
+
+        for k in variables.keys():
+            vs.set(k, variables[k])
+
+        return vs
 
     def set(self, symbol, value):
-        raise NotImplementedError("DIY")
+        self.variables[symbol] = value
