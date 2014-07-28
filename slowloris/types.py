@@ -39,4 +39,6 @@ class Environment:
         return vs
 
     def set(self, symbol, value):
+        if symbol in self.variables:
+            raise LispError('%s already in the environment.' % str(symbol))
         self.variables[symbol] = value
