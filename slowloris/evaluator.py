@@ -18,30 +18,40 @@ operators = {}
 
 def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment.
-
-    TODO: What is with this Environment object?
     """
     # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
-    if type(ast) != list:
-        return env.lookup(ast)
+    # TODO: Am I cutting off the rest of the AST with the below statements?
+    if not is_list(ast):
+        if is_integer(ast) or is_boolean(ast):
+            return ast
+        else:
+            return env.lookup(ast)
 
     if ast[0] == 'quote':
-        if len(ast) > 2:
-            raise LispError('quote only takes one argument.')  # TODO: does this cut off the rest of my AST?
+        assert_exp_length(ast, 2)
         return ast[1]
     elif ast[0] == 'atom':
-        if len(ast) > 2:  # TODO: does this cut off the rest of my AST?
-            raise LispError('atom only takes one argument.')
+        assert_exp_length(ast, 2)
         return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
+    elif ast[0] == 'define':
+        if len(ast) != 3:
+            raise LispError('Wrong number of arguments')
+        elif not is_symbol(ast[1]):
+            raise LispError('non-symbol')
+        
+        if is_symbol(ast[2]) or is_list(ast[2]):
+            env.set(ast[1], evaluate(ast[2], env))
+        else:
+            env.set(ast[1], ast[2])
+            
+        return 'Defined.'
     elif ast[0] == 'eq':
-        if len(ast) > 3:  # TODO: does this cut off the rest of my AST?
-            raise LispError('eq only takes two arguments.')
+        assert_exp_length(ast, 3)
         if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:
             return False
         else:
             return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
     elif ast[0] == 'if':
-        # TODO: Part 3, this is where I stopped for the night.
         if evaluate(ast[1], env):
             return evaluate(ast[2], env)
         else:
@@ -53,7 +63,7 @@ def evaluate(ast, env):
         #        raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
 
         if ast[0] == '+':
-            return evaluate(ast[1], env) + evaluate(ast[2], env)  # TODO: Am I cutting off the rest of the AST?
+            return evaluate(ast[1], env) + evaluate(ast[2], env)
         elif ast[0] == '-':
             return evaluate(ast[1], env) - evaluate(ast[2], env)
         elif ast[0] == '*':
@@ -61,7 +71,7 @@ def evaluate(ast, env):
         elif ast[0] == '/':
             return evaluate(ast[1], env) / evaluate(ast[2], env)
         elif ast[0] == 'mod':
-            return evaluate(ast[1], env) % evaluate(ast[2], env)  # TODO: Am I cutting off the rest of the AST?
+            return evaluate(ast[1], env) % evaluate(ast[2], env)
         elif ast[0] == '<':
             return evaluate(ast[1], env) < evaluate(ast[2], env)
         elif ast[0] == '=':
@@ -71,5 +81,21 @@ def evaluate(ast, env):
         elif ast[0] == '>':
             return evaluate(ast[1], env) > evaluate(ast[2], env)
 
-    return env.lookup(ast)
+    return ast
 
+
+def is_float(s):
+    """Can the input string be parsed into a float?"""
+    try:
+        float(s)
+        return True
+    except:
+        return False
+
+def is_int(s):
+    """Can the input string be parsed into a int?"""
+    try:
+        int(s)
+        return True
+    except:
+        return False
