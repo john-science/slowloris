@@ -33,12 +33,12 @@ class Environment:
     def extend(self, variables):
         vs = Environment(copy.deepcopy(self.variables))
 
-        for k in variables.keys():
-            vs.set(k, variables[k])
+        for key,val in variables.iteritems():
+            vs.variables[key] = val
 
         return vs
 
     def set(self, symbol, value):
         if symbol in self.variables:
-            raise LispError('%s already in the environment.' % str(symbol))
+            raise LispError('%s already defined' % str(symbol))
         self.variables[symbol] = value
