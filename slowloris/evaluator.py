@@ -23,7 +23,7 @@ def evaluate(ast, env):
     """
     # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
     if type(ast) != list:
-        return ast
+        return env.lookup(ast)
 
     if ast[0] == 'quote':
         if len(ast) > 2:
@@ -47,6 +47,7 @@ def evaluate(ast, env):
         else:
             return evaluate(ast[3], env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
+        # TODO: I am relying on Python to catch the type errors in these math interactions.
         #if type(ast[1]) != type(ast[2]):
         #    if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
         #        raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
@@ -70,5 +71,5 @@ def evaluate(ast, env):
         elif ast[0] == '>':
             return evaluate(ast[1], env) > evaluate(ast[2], env)
 
-    return ast
+    return env.lookup(ast)
 
