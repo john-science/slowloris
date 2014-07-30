@@ -35,7 +35,7 @@ def evaluate(ast, env):
         return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
     elif ast[0] == 'define':
         if len(ast) != 3:
-            raise LispError('Wrong number of arguments')
+            raise LispError('Wrong number of arguments')  # TODO: the test is stupid
         elif not is_symbol(ast[1]):
             raise LispError('non-symbol')
         
@@ -45,6 +45,13 @@ def evaluate(ast, env):
             env.set(ast[1], ast[2])
             
         return 'Defined.'
+    elif ast[0] == 'lambda':
+        # assert_exp_length(ast, 3)  # TODO: the test is stupid
+        if len(ast[1]) != 3:
+            raise LispError('number of arguments')
+        elif not is_list(ast[1]):
+            raise LispError('The parameters of lambda should be a list.')
+        return Closure(env, ast[1], ast[2])
     elif ast[0] == 'eq':
         assert_exp_length(ast, 3)
         if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:

@@ -8,17 +8,22 @@ It's your job to implement the Closure and Environment types.
 The LispError class you can have for free :)
 """
 
+
 class LispError(Exception): 
     """General lisp error class."""
     pass
 
+
 class Closure:
     
     def __init__(self, env, params, body):
-        raise NotImplementedError("DIY")
+        self.env = env
+        self.params = params
+        self.body = body
 
     def __str__(self):
         return "<closure/%d>" % len(self.params)
+
 
 class Environment:
 
