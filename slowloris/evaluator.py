@@ -47,7 +47,7 @@ def evaluate(ast, env):
         return 'Defined.'
     elif ast[0] == 'lambda':
         # assert_exp_length(ast, 3)  # TODO: the test is stupid
-        if len(ast[1]) != 3:
+        if len(ast) != 3:
             raise LispError('number of arguments')
         elif not is_list(ast[1]):
             raise LispError('The parameters of lambda should be a list.')
@@ -87,6 +87,14 @@ def evaluate(ast, env):
             return evaluate(ast[1], env) != evaluate(ast[2], env)
         elif ast[0] == '>':
             return evaluate(ast[1], env) > evaluate(ast[2], env)
+    elif is_closure(ast[0]):
+        if len(ast) == 1:
+            return evaluate(ast[0].body, ast[0].env)
+        else:
+            return evaluate(ast[0].body, \
+                            ast[0].env.extend(dict(zip(ast[0].params, ast[1:]))))
+                            #ast[0].env.extend(dict(zip(ast[0].params, \
+                            #                  evaluate(ast[1:], env)))))
 
     return ast
 

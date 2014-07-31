@@ -15,13 +15,13 @@ class LispError(Exception):
 
 
 class Closure:
-    
+
     def __init__(self, env, params, body):
-        self.env = env
+        self.env = env  #.extend(params)
         self.params = params
         self.body = body
 
-    def __str__(self):
+    def __str__(self):  # TODO: Necessary?
         return "<closure/%d>" % len(self.params)
 
 
