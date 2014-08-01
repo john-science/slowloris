@@ -92,9 +92,8 @@ def evaluate(ast, env):
             return evaluate(ast[0].body, ast[0].env)
         else:
             return evaluate(ast[0].body, \
-                            ast[0].env.extend(dict(zip(ast[0].params, ast[1:]))))
-                            #ast[0].env.extend(dict(zip(ast[0].params, \
-                            #                  evaluate(ast[1:], env)))))
+                            ast[0].env.extend(dict(zip(ast[0].params, \
+                                              evaluate(ast[1], env)))))
 
     return ast
 

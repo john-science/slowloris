@@ -17,7 +17,7 @@ class LispError(Exception):
 class Closure:
 
     def __init__(self, env, params, body):
-        self.env = env  #.extend(params)
+        self.env = env  # .extend(params)
         self.params = params
         self.body = body
 
