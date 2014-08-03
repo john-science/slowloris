@@ -94,8 +94,18 @@ def evaluate(ast, env):
             vals = [evaluate(t, env) for t in ast[1:]]
             return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
     elif ast[0] in env.variables.keys():
+        if len(env.variables[ast[0]].params) != len(ast) - 1:
+            e = "wrong number of arguments, expected %d got %d" % \
+                (len(env.variables[ast[0]].params), len(ast) - 1)
+            raise LispError("wrong number of arguments, expected 2 got 3")
         vals = [evaluate(t, env) for t in ast[1:]]
         return evaluate([env.variables[ast[0]]] + vals, env)
+    elif is_list(ast[0]):
+        return evaluate([evaluate(ast[0], env)] + ast[1:], env)
+    else:
+        raise LispError('not a function')
+        
+    # TODO: Is this point unreachable?
 
     return ast
 
