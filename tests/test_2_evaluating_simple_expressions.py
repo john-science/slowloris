@@ -77,8 +77,6 @@ def test_basic_math_operators():
     assert_equals(False, evaluate([">", 2, 7], Environment()))
     assert_equals(False, evaluate([">", 7, 7], Environment()))
 
-# TODO: This below should work, but does not yet.
-'''
 def test_combined_math_operators():
     """To be able to do anything useful, we need some combined math operators.
 
@@ -86,10 +84,9 @@ def test_combined_math_operators():
     """
 
     assert_equals(10, evaluate(parse("(+ (+ 1 2) (+ 3 4))"), Environment()))
-'''
 
 def test_math_oprators_only_work_on_numbers():
     """The math functions should only allow numbers as arguments."""
 
-    with assert_raises(LispError):
+    with assert_raises(TypeError):
         evaluate(parse("(+ 1 'foo)"), Environment())
