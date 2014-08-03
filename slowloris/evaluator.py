@@ -93,10 +93,14 @@ def evaluate(ast, env):
         else:
             vals = [evaluate(t, env) for t in ast[1:]]
             return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
+    elif ast[0] in env.variables.keys():
+        vals = [evaluate(t, env) for t in ast[1:]]
+        return evaluate([env.variables[ast[0]]] + vals, env)
 
     return ast
 
 
+# TODO: Remove
 def is_float(s):
     """Can the input string be parsed into a float?"""
     try:
@@ -105,6 +109,8 @@ def is_float(s):
     except:
         return False
 
+
+# TODO: Remove
 def is_int(s):
     """Can the input string be parsed into a int?"""
     try:
