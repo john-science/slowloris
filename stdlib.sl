@@ -13,3 +13,4 @@
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
+;; map, reduce (accumulate/fold), filter, flatmap
