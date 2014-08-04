@@ -9,7 +9,7 @@
 
 ;; IDEAS
 
-;; list operations: head, tail, prepend, append
+;; list operations: prepend, append
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
-;; 
+;; str(), int(), float(), len(), exit(), raise?, try, except?
