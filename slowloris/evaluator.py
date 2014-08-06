@@ -108,23 +108,3 @@ def evaluate(ast, env):
     # TODO: Is this point unreachable?
 
     return ast
-
-
-# TODO: Remove
-def is_float(s):
-    """Can the input string be parsed into a float?"""
-    try:
-        float(s)
-        return True
-    except:
-        return False
-
-
-# TODO: Remove
-def is_int(s):
-    """Can the input string be parsed into a int?"""
-    try:
-        int(s)
-        return True
-    except:
-        return False
