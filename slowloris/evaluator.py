@@ -63,6 +63,34 @@ def evaluate(ast, env):
             return evaluate(ast[2], env)
         else:
             return evaluate(ast[3], env)
+    elif ast[0] == 'cons':
+        assert_exp_length(ast, 3)
+        ls = evaluate(ast[2], env)
+        if not is_list(ls):
+            raise LispError('The second argument of cons should be a list.')
+        return [evaluate(ast[1], env)] + ls
+    elif ast[0] == 'head':
+        assert_exp_length(ast, 2)
+        ls = evaluate(ast[1], env)
+        if not is_list(ls):
+            raise LispError('The argument of head should be a list.')
+        elif len(ls) == 0:
+            raise LispError('And empty list has no head.')
+        return ls[0]
+    elif ast[0] == 'tail':
+        assert_exp_length(ast, 2)
+        ls = evaluate(ast[1], env)
+        if not is_list(ls):
+            raise LispError('The argument of tail should be a list.')
+        elif len(ls) == 0:
+            raise LispError('And empty list has no tail.')
+        return ls[1:]
+    elif ast[0] == 'empty':
+        assert_exp_length(ast, 2)
+        ls = evaluate(ast[1], env)
+        if not is_list(ls):
+            raise LispError('The argument of empty should be a list.')
+        return len(ls) == 0
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
         # TODO: I am relying on Python to catch the type errors in these math interactions.
         #if type(ast[1]) != type(ast[2]):
