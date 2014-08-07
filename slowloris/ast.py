@@ -19,11 +19,18 @@ def is_boolean(x):
 def is_integer(x):
     return isinstance(x, int)
 
+def is_float(x):
+    return isinstance(x, float)
+
+def is_number(x):
+    return is_integer(x) or is_float(x)
+
 def is_closure(x):
     return isinstance(x, Closure)
 
 def is_atom(x):
     return is_symbol(x) \
         or is_integer(x) \
+        or is_float(x) \
         or is_boolean(x) \
         or is_closure(x)

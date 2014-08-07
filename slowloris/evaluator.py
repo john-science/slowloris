@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from types import Environment, LispError, Closure
-from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_integer
+from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_integer, is_number
 from asserts import assert_exp_length, assert_valid_definition, assert_boolean
 from parser import unparse
 
@@ -17,16 +17,20 @@ operators = {}
 
 
 def evaluate(ast, env):
-    """Evaluate an Abstract Syntax Tree in the specified environment.
-    """
+    """Evaluate an Abstract Syntax Tree in the specified environment."""
     # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
     # TODO: Am I cutting off the rest of the AST with the below statements?
-    if not is_list(ast):
-        if is_integer(ast) or is_boolean(ast):
-            return ast
-        else:
-            return env.lookup(ast)
+    if is_atom(ast):
+        return ast
+    elif is_symbol(ast):
+        return env.lookup(ast)
+    elif is_list(ast):
+        return eval_list(ast, env)
+    else:
+        raise LispError('Syntax error: %s' % unparse(ast))
 
+def eval_list(ast, env):
+    """A helper method, to evaluate the common list-form AST"""
     if ast[0] == 'quote':
         assert_exp_length(ast, 2)
         return ast[1]
@@ -92,29 +96,7 @@ def evaluate(ast, env):
             raise LispError('The argument of empty should be a list.')
         return len(ls) == 0
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
-        # TODO: I am relying on Python to catch the type errors in these math interactions.
-        #if type(ast[1]) != type(ast[2]):
-        #    if type(ast[1]) not in [int, float] or type(ast[2]) not in [int, float]:
-        #        raise LispError('Cannot add type %s to type %s.' % (str(type(ast[1])), str(type(ast[2]))))
-
-        if ast[0] == '+':
-            return evaluate(ast[1], env) + evaluate(ast[2], env)
-        elif ast[0] == '-':
-            return evaluate(ast[1], env) - evaluate(ast[2], env)
-        elif ast[0] == '*':
-            return evaluate(ast[1], env) * evaluate(ast[2], env)
-        elif ast[0] == '/':
-            return evaluate(ast[1], env) / evaluate(ast[2], env)
-        elif ast[0] == 'mod':
-            return evaluate(ast[1], env) % evaluate(ast[2], env)
-        elif ast[0] == '<':
-            return evaluate(ast[1], env) < evaluate(ast[2], env)
-        elif ast[0] == '=':
-            return evaluate(ast[1], env) == evaluate(ast[2], env)
-        elif ast[0] == '!=':
-            return evaluate(ast[1], env) != evaluate(ast[2], env)
-        elif ast[0] == '>':
-            return evaluate(ast[1], env) > evaluate(ast[2], env)
+        return eval_math(ast, env)
     elif is_closure(ast[0]):
         if len(ast) == 1:
             return evaluate(ast[0].body, ast[0].env)
@@ -131,8 +113,28 @@ def evaluate(ast, env):
     elif is_list(ast[0]):
         return evaluate([evaluate(ast[0], env)] + ast[1:], env)
     else:
-        raise LispError('not a function')
-        
-    # TODO: Is this point unreachable?
+        raise LispError('%s is not a function' %s unparse(ast[0]))
 
-    return ast
+
+def eval_math(ast, env):
+    """helper method to evaluate simple mathematicl statements"""
+    # TODO: Should these statements should work for more than two values? How about just +?
+    #       IF not, should I put a check on the length of the arguments?
+    ops = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: a / b,
+        'mod': lambda a, b: a % b,
+        '<': lambda a, b: a < b,
+        '=': lambda a, b: a == b,
+        '!=': lambda a, b: a != b,
+        '>': lambda a, b: a > b
+    }
+    op = ast[0]
+    a = evaluate(ast[1], env)
+    b = evaluate(ast[2], env)
+    if is_number(a) and is_number(b):
+        return ops[op](a, b)
+    else:
+        raise LispError("Unsupported argument type for %s" % op)

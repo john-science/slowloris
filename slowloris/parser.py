@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from ast import is_boolean, is_list
+from ast import is_boolean, is_list, is_float, is_integer
 from types import LispError
 
 """
@@ -56,7 +56,7 @@ def parse_type(src):
         src = False
     elif src == '#t':
         src = True
-    elif src.isdigit():
+    elif is_integer(src):
         src = int(src)
     elif is_float(src):
         src = float(src)
@@ -70,14 +70,6 @@ def parse_types_deep(ast):
         return ast
     else:  # type is str
         return parse_type(ast)
-
-def is_float(s):
-    """Can the input string be parsed into a float?"""
-    try:
-        float(s)
-        return True
-    except:
-        return False
 
 ##
 ## Below are a few useful utility functions.
