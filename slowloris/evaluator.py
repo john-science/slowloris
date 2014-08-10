@@ -35,90 +35,119 @@ def eval_list(ast, env):
     if ast[0] == 'quote':
         return eval_quote(ast, env)
     elif ast[0] == 'atom':
-        assert_exp_length(ast, 2)
-        return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
+        return eval_atom(ast, env)
     elif ast[0] == 'define':
-        if len(ast) != 3:
-            raise LispError('Wrong number of arguments')  # TODO: the test is stupid
-        elif not is_symbol(ast[1]):
-            raise LispError('non-symbol')
-        
-        if is_symbol(ast[2]) or is_list(ast[2]):
-            env.set(ast[1], evaluate(ast[2], env))
-        else:
-            env.set(ast[1], ast[2])
-            
-        return 'Defined.'
+        return eval_define(ast, env)
     elif ast[0] == 'lambda':
-        # assert_exp_length(ast, 3)  # TODO: the test is stupid
-        if len(ast) != 3:
-            raise LispError('number of arguments')
-        elif not is_list(ast[1]):
-            raise LispError('The parameters of lambda should be a list.')
-        return Closure(env, ast[1], ast[2])
+        return eval_lambda(ast, env)
     elif ast[0] == 'eq':
-        assert_exp_length(ast, 3)
-        if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:
-            return False
-        else:
-            return evaluate(ast[1], env) == evaluate(ast[2], env)  # TODO: Should this be a new Env()?
+        return eval_eq(ast, env)
     elif ast[0] == 'if':
-        if evaluate(ast[1], env):
-            return evaluate(ast[2], env)
-        else:
-            return evaluate(ast[3], env)
+        return eval_if(ast, env)
     elif ast[0] == 'cons':
-        assert_exp_length(ast, 3)
-        ls = evaluate(ast[2], env)
-        if not is_list(ls):
-            raise LispError('The second argument of cons should be a list.')
-        return [evaluate(ast[1], env)] + ls
+        return eval_cons(ast, env)
     elif ast[0] == 'head':
-        assert_exp_length(ast, 2)
-        ls = evaluate(ast[1], env)
-        if not is_list(ls):
-            raise LispError('The argument of head should be a list.')
-        elif len(ls) == 0:
-            raise LispError('And empty list has no head.')
-        return ls[0]
+        return eval_head(ast, env)
     elif ast[0] == 'tail':
-        assert_exp_length(ast, 2)
-        ls = evaluate(ast[1], env)
-        if not is_list(ls):
-            raise LispError('The argument of tail should be a list.')
-        elif len(ls) == 0:
-            raise LispError('And empty list has no tail.')
-        return ls[1:]
+        return eval_tail(ast, env)
     elif ast[0] == 'empty':
-        assert_exp_length(ast, 2)
-        ls = evaluate(ast[1], env)
-        if not is_list(ls):
-            raise LispError('The argument of empty should be a list.')
-        return len(ls) == 0
+        return eval_empty(ast, env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
         return eval_math(ast, env)
     elif is_closure(ast[0]):
-        if len(ast) == 1:
-            return evaluate(ast[0].body, ast[0].env)
-        else:
-            vals = [evaluate(t, env) for t in ast[1:]]
-            return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
+        return eval_closure(ast, env)
     elif ast[0] in env.variables.keys():
-        if len(env.variables[ast[0]].params) != len(ast) - 1:
-            e = "wrong number of arguments, expected %d got %d" % \
-                (len(env.variables[ast[0]].params), len(ast) - 1)
-            raise LispError("wrong number of arguments, expected 2 got 3")
-        vals = [evaluate(t, env) for t in ast[1:]]
-        return evaluate([env.variables[ast[0]]] + vals, env)
+        return eval_env_vars(ast, env)
     elif is_list(ast[0]):
         return evaluate([evaluate(ast[0], env)] + ast[1:], env)
     else:
         raise LispError('%s is not a function' % unparse(ast[0]))
 
 
-def eval_quote(ast, env):
+def eval_atom(ast, env):
     assert_exp_length(ast, 2)
-    return ast[1]
+    return type(evaluate(ast[1], env)) != list
+
+
+def eval_closure(ast, env):
+    if len(ast) == 1:
+        return evaluate(ast[0].body, ast[0].env)
+    else:
+        vals = [evaluate(t, env) for t in ast[1:]]
+        return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
+
+
+def eval_cons(ast, env):
+    assert_exp_length(ast, 3)
+    ls = evaluate(ast[2], env)
+    if not is_list(ls):
+        raise LispError('The second argument of cons should be a list.')
+    return [evaluate(ast[1], env)] + ls
+
+
+def eval_define(ast, env):
+    if len(ast) != 3:
+        raise LispError('Wrong number of arguments')  # TODO: the original test is stupid
+    elif not is_symbol(ast[1]):
+        raise LispError('non-symbol')
+    
+    if is_symbol(ast[2]) or is_list(ast[2]):
+        env.set(ast[1], evaluate(ast[2], env))
+    else:
+        env.set(ast[1], ast[2])
+        
+    return 'Defined.'
+
+
+def eval_empty(ast, env):
+    assert_exp_length(ast, 2)
+    ls = evaluate(ast[1], env)
+    if not is_list(ls):
+        raise LispError('The argument of empty should be a list.')
+    return len(ls) == 0
+
+
+def eval_env_vars(ast, env):
+    if len(env.variables[ast[0]].params) != len(ast) - 1:
+        e = "wrong number of arguments, expected %d got %d" % \
+            (len(env.variables[ast[0]].params), len(ast) - 1)
+        raise LispError("wrong number of arguments, expected 2 got 3")
+    vals = [evaluate(t, env) for t in ast[1:]]
+    return evaluate([env.variables[ast[0]]] + vals, env)
+
+
+def eval_eq(ast, env):
+    assert_exp_length(ast, 3)
+    if type(evaluate(ast[1], env)) == list or type(evaluate(ast[2], env)) == list:
+        return False
+    else:
+        return evaluate(ast[1], env) == evaluate(ast[2], env)
+
+
+def eval_head(ast, env):
+    assert_exp_length(ast, 2)
+    ls = evaluate(ast[1], env)
+    if not is_list(ls):
+        raise LispError('The argument of head should be a list.')
+    elif len(ls) == 0:
+        raise LispError('And empty list has no head.')
+    return ls[0]
+
+
+def eval_if(ast, env):
+    if evaluate(ast[1], env):
+        return evaluate(ast[2], env)
+    else:
+        return evaluate(ast[3], env)
+
+
+def eval_lambda(ast, env):
+    # assert_exp_length(ast, 3)  # TODO: the test is stupid
+    if len(ast) != 3:
+        raise LispError('number of arguments')
+    elif not is_list(ast[1]):
+        raise LispError('The parameters of lambda should be a list.')
+    return Closure(env, ast[1], ast[2])
 
 
 def eval_math(ast, env):
@@ -142,4 +171,19 @@ def eval_math(ast, env):
     if is_number(a) and is_number(b):
         return ops[op](a, b)
     else:
-        raise LispError("Unsupported argument type for %s" % op)
+        raise TypeError("Unsupported argument type for %s" % op)
+
+
+def eval_quote(ast, env):
+    assert_exp_length(ast, 2)
+    return ast[1]
+
+
+def eval_tail(ast, env):
+    assert_exp_length(ast, 2)
+    ls = evaluate(ast[1], env)
+    if not is_list(ls):
+        raise LispError('The argument of tail should be a list.')
+    elif len(ls) == 0:
+        raise LispError('And empty list has no tail.')
+    return ls[1:]
