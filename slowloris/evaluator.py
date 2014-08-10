@@ -20,20 +20,20 @@ def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment."""
     # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
     # TODO: Am I cutting off the rest of the AST with the below statements?
-    if is_atom(ast):
-        return ast
-    elif is_symbol(ast):
+    if is_symbol(ast):
         return env.lookup(ast)
+    elif is_atom(ast):
+        return ast
     elif is_list(ast):
         return eval_list(ast, env)
     else:
         raise LispError('Syntax error: %s' % unparse(ast))
 
+
 def eval_list(ast, env):
     """A helper method, to evaluate the common list-form AST"""
     if ast[0] == 'quote':
-        assert_exp_length(ast, 2)
-        return ast[1]
+        return eval_quote(ast, env)
     elif ast[0] == 'atom':
         assert_exp_length(ast, 2)
         return type(evaluate(ast[1], env)) != list  # TODO: Should this be a new Environment()?
@@ -113,7 +113,12 @@ def eval_list(ast, env):
     elif is_list(ast[0]):
         return evaluate([evaluate(ast[0], env)] + ast[1:], env)
     else:
-        raise LispError('%s is not a function' %s unparse(ast[0]))
+        raise LispError('%s is not a function' % unparse(ast[0]))
+
+
+def eval_quote(ast, env):
+    assert_exp_length(ast, 2)
+    return ast[1]
 
 
 def eval_math(ast, env):

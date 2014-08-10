@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from ast import is_boolean, is_list, is_float, is_integer
+from ast import is_boolean, is_list, is_float, is_integer, is_decimal
 from types import LispError
 
 """
@@ -53,13 +53,13 @@ def parse_type(src):
     """convert a string to an implicit type, if it exists."""
     # TODO: This seems clunky. Is it slow? Can I make it easier to extend to more types?
     if src == '#f':
-        src = False
+        return False
     elif src == '#t':
-        src = True
-    elif is_integer(src):
-        src = int(src)
-    elif is_float(src):
-        src = float(src)
+        return True
+    elif src.isdigit():
+        return int(src)
+    elif is_decimal(src):
+        return float(src)
 
     return src
 

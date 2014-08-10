@@ -34,3 +34,11 @@ def is_atom(x):
         or is_float(x) \
         or is_boolean(x) \
         or is_closure(x)
+
+def is_decimal(x):
+    try:
+        float(x)
+        return True
+    except:
+        return False
+    return False
