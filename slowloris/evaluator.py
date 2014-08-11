@@ -18,8 +18,6 @@ operators = {}
 
 def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment."""
-    # TODO: These if-statements are ugly! I need to make this more extensible. (But still fast!?!)
-    # TODO: Am I cutting off the rest of the AST with the below statements?
     if is_symbol(ast):
         return env.lookup(ast)
     elif is_atom(ast):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from ast import is_boolean, is_list, is_float, is_integer, is_decimal
+from ast import is_boolean, is_list, is_decimal
 from types import LispError
 
 """
@@ -9,6 +9,7 @@ This is the parser module, with the `parse` function which you'll implement as p
 the workshop. Its job is to convert strings into data structures that the evaluator can
 understand.
 """
+
 
 def parse(source):
     """Parse string representation of one *single* expression
@@ -24,6 +25,7 @@ def parse(source):
     ast = parse_types_deep(ast)
 
     return ast
+
 
 def parse_text(source):
     """Recursive method to parse the Slow Loris text into an AST"""
@@ -49,6 +51,7 @@ def parse_text(source):
         else:
             return source.strip()
 
+
 def parse_type(src):
     """convert a string to an implicit type, if it exists."""
     # TODO: This seems clunky. Is it slow? Can I make it easier to extend to more types?
@@ -63,6 +66,7 @@ def parse_type(src):
 
     return src
 
+
 def parse_types_deep(ast):
     if type(ast) == list:
         for i in range(len(ast)):
@@ -71,14 +75,17 @@ def parse_types_deep(ast):
     else:  # type is str
         return parse_type(ast)
 
+
 ##
 ## Below are a few useful utility functions.
 ##
+
 
 def remove_comments(source):
     """Remove from a string anything in between a ; and a linebreak"""
 
     return re.sub(r";.*\n", "\n", source)
+
 
 def find_matching_paren(source, start=0):
     """Given a string and the index of an opening parenthesis, determines
@@ -97,6 +104,7 @@ def find_matching_paren(source, start=0):
             open_brackets -= 1
     return pos
 
+
 def split_exps(source):
     """Splits a source string into subexpressions
     that can be parsed individually.
@@ -113,6 +121,7 @@ def split_exps(source):
         exp, rest = first_expression(rest)
         exps.append(exp)
     return exps
+
 
 def first_expression(source):
     """Split string into (exp, rest) where exp is the
@@ -132,10 +141,12 @@ def first_expression(source):
         atom = source[:end]
         return atom, source[end:]
 
+
 ##
 ## The functions below, `parse_multiple` and `unparse` are implemented in order for
 ## the REPL to work.
 ##
+
 
 def parse_multiple(source):
     """Creates a list of ASTs from program source constituting multiple expressions.
@@ -149,6 +160,7 @@ def parse_multiple(source):
 
     source = remove_comments(source)
     return [parse(exp) for exp in split_exps(source)]
+
 
 def unparse(ast):
     """Turns an AST back into lisp program source"""

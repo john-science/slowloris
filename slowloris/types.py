@@ -9,7 +9,7 @@ The LispError class you can have for free :)
 """
 
 
-class LispError(Exception): 
+class LispError(Exception):
     """General lisp error class."""
     pass
 
@@ -21,7 +21,7 @@ class Closure:
         self.params = params
         self.body = body
 
-    def __str__(self):  # TODO: Necessary?
+    def __str__(self):
         return "<closure/%d>" % len(self.params)
 
 
