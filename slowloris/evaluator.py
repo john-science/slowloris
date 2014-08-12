@@ -50,7 +50,7 @@ def eval_list(ast, env):
         return eval_tail(ast, env)
     elif ast[0] == 'empty':
         return eval_empty(ast, env)
-    elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '=', '!=', '>']:
+    elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
         return eval_math(ast, env)
     elif is_closure(ast[0]):
         return eval_closure(ast, env)
@@ -159,8 +159,10 @@ def eval_math(ast, env):
         '/': lambda a, b: a / b,
         'mod': lambda a, b: a % b,
         '<': lambda a, b: a < b,
+        '<=': lambda a, b: a <= b,
         '=': lambda a, b: a == b,
         '!=': lambda a, b: a != b,
+        '>=': lambda a, b: a >= b,
         '>': lambda a, b: a > b
     }
     op = ast[0]
