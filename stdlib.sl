@@ -16,30 +16,21 @@
     (lambda (a b)
         (if a (if b #f #t) (if b #t #f))))
 
-;;(define sum-acc
-;;    (lambda (a acc)
-;;        (if (empty a) acc
-;;            (sum-acc (tail a) (+ acc (head a))))))
-
-;;(define sum-acc
-;;    (lambda (a)
-;;        (if (empty a) 0
-;;            (+ (head a) (sum-acc (tail a))))))
-
-;;(define sum
-;;    (lambda (a)
-;;        5))
-;;        sum-acc a))
+;; list functions
 
 (define foldleft
-    (lambda (f z lst)
+    (lambda (f acc lst)
         (if (empty lst)
-            z
-            (foldleft f (f z (head lst)) (tail lst)))))
+            acc
+            (foldleft f (f acc (head lst)) (tail lst)))))
 
 (define sum
     (lambda (lst)
         (foldleft (lambda (x y) (+ x y)) 0 lst)))
+
+(define length
+    (lambda (lst)
+        (foldleft (lambda (x y) (+ x 1)) 0 lst)))
 
 ;; FUNCTION TEMPLATE
 ;;
