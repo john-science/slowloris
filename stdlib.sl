@@ -1,4 +1,4 @@
-;; Some logical operators.
+;; logical operators
 
 (define not
     (lambda (b)
@@ -31,6 +31,26 @@
 (define length
     (lambda (lst)
         (foldleft (lambda (x y) (+ x 1)) 0 lst)))
+
+(define append
+    (lambda (lst1 lst2)
+        (if (empty lst1) lst2
+            (cons (head lst1) (append (tail lst1) lst2)))))
+
+(define filter2
+    (lambda (pred lst)
+        (foldleft (lambda (fun ls)
+                          (if (fun (head ls))
+                              (append (head ls))
+                              (ls))
+                   '() lst))))
+
+(define filter
+    (lambda (pred lst)
+        (if (empty lst) '()
+            (if (pred (head lst))
+                (cons (head lst) (filter pred (tail lst)))
+                (filter pred (tail lst))))))
 
 ;; FUNCTION TEMPLATE
 ;;

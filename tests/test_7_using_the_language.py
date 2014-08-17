@@ -37,44 +37,52 @@ def test_not():
     assert_equals("#f", interpret('(not #t)', env))
 
 def test_or():
+    """test the logical 'or' operator"""
     assert_equals("#f", interpret('(or #f #f)', env))
     assert_equals("#t", interpret('(or #t #f)', env))
     assert_equals("#t", interpret('(or #f #t)', env))
     assert_equals("#t", interpret('(or #t #t)', env))
 
 def test_and():
+    """test the logical 'and' operator"""
     assert_equals("#f", interpret('(and #f #f)', env))
     assert_equals("#f", interpret('(and #t #f)', env))
     assert_equals("#f", interpret('(and #f #t)', env))
     assert_equals("#t", interpret('(and #t #t)', env))
 
 def test_xor():
+    """test the logical 'exclusive or' operator"""
     assert_equals("#f", interpret('(xor #f #f)', env))
     assert_equals("#t", interpret('(xor #t #f)', env))
     assert_equals("#t", interpret('(xor #f #t)', env))
     assert_equals("#f", interpret('(xor #t #t)', env))
 
 def test_greater_or_equal():
+    """test the mathematical 'greater than or equal to' operator"""
     assert_equals("#f", interpret('(>= 1 2)', env))
     assert_equals("#t", interpret('(>= 2 2)', env))
     assert_equals("#t", interpret('(>= 2 1)', env))
 
 def test_less_or_equal():
+    """test the mathematical 'less than or equal to' operator"""
     assert_equals("#t", interpret('(<= 1 2)', env))
     assert_equals("#t", interpret('(<= 2 2)', env))
     assert_equals("#f", interpret('(<= 2 1)', env))
 
 def test_less_than():
+    """test the mathematical 'less than' operator"""
     assert_equals("#t", interpret('(< 1 2)', env))
     assert_equals("#f", interpret('(< 2 2)', env))
     assert_equals("#f", interpret('(< 2 1)', env))
 
 def test_sum():
+    """sum all of the elements in a list using the '+' operator"""
     assert_equals("5", interpret("(sum '(1 1 1 1 1))", env))
     assert_equals("10", interpret("(sum '(1 2 3 4))", env))
     assert_equals("0", interpret("(sum '())", env))
 
 def test_length():
+    """determine the length of a list"""
     assert_equals("5", interpret("(length '(1 2 3 4 5))", env))
     assert_equals("3", interpret("(length '(#t '(1 2 3) 'foo-bar))", env))
     assert_equals("0", interpret("(length '())", env))
@@ -97,6 +105,7 @@ def test_filter():
     assert_equals("(2 4 6)", interpret("(filter even '(1 2 3 4 5 6))", env))
 
 def test_map():
+    """'map' creates a new list by applying a function to each element of another"""
     interpret("""
         (define inc
             (lambda (x) (+ 1 x)))
@@ -104,15 +113,22 @@ def test_map():
     assert_equals("(2 3 4)", interpret("(map inc '(1 2 3))", env))
 
 def test_reverse():
+    """create a list by 'reversing' the order of the elements of another"""
     assert_equals("(4 3 2 1)", interpret("(reverse '(1 2 3 4))", env))
     assert_equals("()", interpret("(reverse '())", env))
 
 def test_range():
+    """'range' creats a list of integers from 'start' to 'end'"""
     assert_equals("(1 2 3 4 5)", interpret("(range 1 5)", env))
     assert_equals("(1)", interpret("(range 1 1)", env))
     assert_equals("()", interpret("(range 2 1)", env))
 
 def test_sort():
+    """'sort' the elements of a list
+    
+    NOTE: This is a VERY naive, first pass sort.
+          It will only sort short lists of integers.
+    """
     assert_equals("(1 2 3 4 5 6 7)",
         interpret("(sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))
