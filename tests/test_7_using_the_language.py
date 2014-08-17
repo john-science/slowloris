@@ -22,16 +22,17 @@ It's your job to create the rest, or perhaps somthing completely different?
 Anything you put in `stdlib.sl` is also available from the REPL, so feel
 free to test things out there.
 
-    $ ./repl 
+    $ ./repl
     →  (not #t)
     #f
 
-PS: Note that in these tests, `interpret` is used. In addition to parsing 
-and evaluating, it "unparses" the result, hence strings such as "#t" as the 
+PS: Note that in these tests, `interpret` is used. In addition to parsing
+and evaluating, it "unparses" the result, hence strings such as "#t" as the
 expected result instead of `True`.
 """
 
-def test_not():    
+def test_not():
+    """logical operator 'not' should return opposite of given boolean value"""
     assert_equals("#t", interpret('(not #f)', env))
     assert_equals("#f", interpret('(not #t)', env))
 
@@ -79,11 +80,15 @@ def test_length():
     assert_equals("0", interpret("(length '())", env))
 
 def test_append():
+    """'append' should combine two lists together, in the given order"""
     assert_equals("(1 2 3 4 5)", interpret("(append '(1 2) '(3 4 5))", env))
     assert_equals("(#t #f 'maybe)", interpret("(append '(#t) '(#f 'maybe))", env))
     assert_equals("()", interpret("(append '() '())", env))
 
 def test_filter():
+    """'filter' should apply a predicate to every element of a list and return only
+    those elements that evaluate 'True'
+    """
     interpret("""
         (define even
             (lambda (x)
@@ -108,6 +113,6 @@ def test_range():
     assert_equals("()", interpret("(range 2 1)", env))
 
 def test_sort():
-    assert_equals("(1 2 3 4 5 6 7)", 
+    assert_equals("(1 2 3 4 5 6 7)",
         interpret("(sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))

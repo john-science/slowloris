@@ -29,13 +29,12 @@ def parse(source):
 
 def parse_text(source):
     """Recursive method to parse the Slow Loris text into an AST"""
+    # TODO: This seems clunky. Is it easily expandable? Is it easily readable?
     if type(source) == list:
         for i in range(len(source)):
             source[i] = parse_text(source[i])
         return source
     else:  # type is str
-        #if source.split(' ')[0].isdigit():
-        #    return int(source.split(' ')[0])
         if len(source) > 0 and source[0] == "'":
             return ['quote', parse_text(source[1:])]
         elif '(' in source:

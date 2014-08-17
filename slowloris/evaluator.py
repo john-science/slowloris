@@ -68,14 +68,6 @@ def eval_atom(ast, env):
 
 
 def eval_closure(ast, env):
-    """
-    if len(ast) == 1:
-        return evaluate(ast[0].body, ast[0].env)
-    else:
-        evaluate(ast[1], env)
-        vals = [evaluate(t, env) for t in ast[1:]]
-        return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
-    """
     closure = ast[0]
     args = ast[1:]
     if len(args) != len(closure.params):
@@ -195,21 +187,3 @@ def eval_quote(ast, env):
 def eval_tail(ast, env):
     lst = evaluate(ast[1], env)
     return lst[1:]
-    """
-    assert_exp_length(ast, 2)
-    try:
-        ls = evaluate(ast[1], env)
-        if not is_list(ls):
-            raise LispError('The argument of tail should be a list.')
-        elif len(ls) == 0:
-            raise LispError('And empty list has no tail.')
-        return ls[1:]
-    except Exception as e:
-        if type(ast[1]) == list:
-            if len(ast[1]) == 0:
-                raise LispError('And empty list has no tail.')
-            else:
-                return ast[1][1:]
-        else:
-            raise LispError('Failed to find tail of list: ' + str(e))
-    """
