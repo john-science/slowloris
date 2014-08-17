@@ -7,7 +7,7 @@ from slowloris.interpreter import interpret, interpret_file
 from slowloris.types import Environment
 
 env = Environment()
-path = join(dirname(relpath(__file__)), '..', 'stdlib.diy')
+path = join(dirname(relpath(__file__)), '..', 'stdlib.sl')
 interpret_file(path, env)
 
 """
@@ -15,11 +15,11 @@ Consider these tests as suggestions for what a standard library for
 your language could contain. Each test function tests the implementation
 of one stdlib function.
 
-Put the implementation in the file `stdlib.diy` at the root directory
+Put the implementation in the file `stdlib.sl` at the root directory
 of the repository. The first function, `not` is already defined for you.
 It's your job to create the rest, or perhaps somthing completely different?
 
-Anything you put in `stdlib.diy` is also available from the REPL, so feel
+Anything you put in `stdlib.sl` is also available from the REPL, so feel
 free to test things out there.
 
     $ ./repl 

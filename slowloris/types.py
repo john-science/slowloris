@@ -14,6 +14,11 @@ class LispError(Exception):
     pass
 
 
+class LispTypeError(LispError):
+    """A LispError subclass, for type errors."""
+    pass
+
+
 class Closure:
 
     def __init__(self, env, params, body):

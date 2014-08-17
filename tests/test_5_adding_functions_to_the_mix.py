@@ -3,6 +3,9 @@
 from nose.tools import assert_equals, assert_raises_regexp, \
     assert_raises, assert_true, assert_false, assert_is_instance
 
+# TODO: remove all instances of "assert_raises_regexp" and replace them with
+#       assert_raises. I don't want to be married to these print outs.
+
 from slowloris.interpreter import interpret
 from slowloris.ast import is_list
 from slowloris.evaluator import evaluate
@@ -211,7 +214,7 @@ def test_calling_with_wrong_number_of_arguments():
     """Functions should raise exceptions when called with wrong number of arguments."""
 
     env = Environment()
-    evaluate(parse("(define fn (lambda (p1 p2) 'whatwever))"), env)
+    evaluate(parse("(define fn (lambda (p1 p2) 'what_ever))"), env)
     error_msg = "wrong number of arguments, expected 2 got 3"
     with assert_raises_regexp(LispError, error_msg):
         evaluate(parse("(fn 1 2 3)"), env)

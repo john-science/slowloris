@@ -16,11 +16,22 @@
     (lambda (a b)
         (if a (if b #f #t) (if b #t #f))))
 
-;; DIY -- Implement the rest of your standard library
-;; here as part 7 of the workshop.
+(define sum
+    (lambda (a)
+        ((define sum-acc
+            (lambda (a acc)
+                (if (empty a) acc
+                    (sum-acc (tail a) (+ acc (head a))))))
+         sum-acc a 0)))
+
+;;(define xxx
+;;    (lambda (a)
+;;        ())
+
 
 ;; IDEAS
 
+;; sum, length, filter, map, append, range, sort
 ;; list operations: prepend, append
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?

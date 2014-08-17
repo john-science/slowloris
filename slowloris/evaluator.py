@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from types import Environment, LispError, Closure
+from types import Environment, LispError, LispTypeError, Closure
 from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_integer, is_number
 from asserts import assert_exp_length, assert_valid_definition, assert_boolean
 from parser import unparse
@@ -71,6 +71,7 @@ def eval_closure(ast, env):
     if len(ast) == 1:
         return evaluate(ast[0].body, ast[0].env)
     else:
+        evaluate(ast[1], env)
         vals = [evaluate(t, env) for t in ast[1:]]
         return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
 
@@ -140,7 +141,7 @@ def eval_if(ast, env):
 
 
 def eval_lambda(ast, env):
-    # assert_exp_length(ast, 3)  # TODO: the test is stupid
+    # assert_exp_length(ast, 3)  # TODO: The test is stupid. Fix it.
     if len(ast) != 3:
         raise LispError('number of arguments')
     elif not is_list(ast[1]):
@@ -149,7 +150,7 @@ def eval_lambda(ast, env):
 
 
 def eval_math(ast, env):
-    """helper method to evaluate simple mathematicl statements"""
+    """helper method to evaluate simple mathematical statements"""
     # TODO: Should these statements should work for more than two values? How about just +?
     #       IF not, should I put a check on the length of the arguments?
     ops = {
@@ -171,7 +172,7 @@ def eval_math(ast, env):
     if is_number(a) and is_number(b):
         return ops[op](a, b)
     else:
-        raise TypeError("Unsupported argument type for %s" % op)
+        raise LispTypeError("Unsupported argument type for %s" % op)
 
 
 def eval_quote(ast, env):

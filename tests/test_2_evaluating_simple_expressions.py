@@ -3,6 +3,7 @@
 from nose.tools import assert_equals, assert_raises
 
 from slowloris.types import LispError
+from slowloris.types import LispTypeError
 from slowloris.types import Environment
 from slowloris.evaluator import evaluate
 from slowloris.parser import parse
@@ -29,6 +30,7 @@ def test_evaluating_quote():
 
     assert_equals("foo", evaluate(["quote", "foo"], Environment()))
     assert_equals([1, 2, False], evaluate(["quote", [1, 2, False]], Environment()))
+    assert_equals([1, 2, 3], evaluate(parse("'(1 2 3)"), Environment()))
 
 def test_evaluating_atom_function():
     """The `atom` form is used to determine whether an expression is an atom.
@@ -88,5 +90,5 @@ def test_combined_math_operators():
 def test_math_oprators_only_work_on_numbers():
     """The math functions should only allow numbers as arguments."""
 
-    with assert_raises(TypeError):
+    with assert_raises(LispTypeError):
         evaluate(parse("(+ 1 'foo)"), Environment())

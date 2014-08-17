@@ -34,6 +34,8 @@ def parse_text(source):
             source[i] = parse_text(source[i])
         return source
     else:  # type is str
+        #if source.split(' ')[0].isdigit():
+        #    return int(source.split(' ')[0])
         if len(source) > 0 and source[0] == "'":
             return ['quote', parse_text(source[1:])]
         elif '(' in source:
