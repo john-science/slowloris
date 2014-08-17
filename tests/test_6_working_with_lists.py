@@ -3,6 +3,7 @@
 from nose.tools import assert_equals, assert_raises_regexp, \
     assert_raises, assert_false, assert_is_instance
 
+from slowloris.interpreter import interpret
 from slowloris.evaluator import evaluate
 from slowloris.parser import parse
 from slowloris.types import LispError, Environment
@@ -52,7 +53,9 @@ def test_getting_tail_of_list():
 
     The tail is the list retained after removing the first element."""
 
+    assert_equals("(2 3)", interpret("(tail '(1 2 3))", Environment()))
     assert_equals([2, 3], evaluate(parse("(tail '(1 2 3))"), Environment()))
+    assert_equals([2, 3], evaluate(['tail', ['quote', [1, 2, 3]]], Environment()))
 
 def test_checking_whether_list_is_empty():
     """The `empty` form checks whether or not a list is empty."""

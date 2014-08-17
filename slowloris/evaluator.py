@@ -54,9 +54,9 @@ def eval_list(ast, env):
         return eval_math(ast, env)
     elif is_closure(ast[0]):
         return eval_closure(ast, env)
-    elif ast[0] in env.variables.keys():
-        return eval_env_vars(ast, env)
-    elif is_list(ast[0]):
+    #elif ast[0] in env.variables.keys():
+    #    return eval_env_vars(ast, env)
+    elif is_symbol(ast[0]) or is_list(ast[0]):
         return evaluate([evaluate(ast[0], env)] + ast[1:], env)
     else:
         raise LispError('%s is not a function' % unparse(ast[0]))
@@ -68,12 +68,24 @@ def eval_atom(ast, env):
 
 
 def eval_closure(ast, env):
+    """
     if len(ast) == 1:
         return evaluate(ast[0].body, ast[0].env)
     else:
         evaluate(ast[1], env)
         vals = [evaluate(t, env) for t in ast[1:]]
         return evaluate(ast[0].body, ast[0].env.extend(dict(zip(ast[0].params, vals))))
+    """
+    closure = ast[0]
+    args = ast[1:]
+    if len(args) != len(closure.params):
+        msg = "wrong number of arguments, expected %d got %d" \
+            % (len(closure.params), len(args))
+        raise LispError(msg)
+    args = [evaluate(a, env) for a in args]
+    bindings = dict(zip(closure.params, args))
+    new_env = closure.env.extend(bindings)
+    return evaluate(closure.body, new_env)
 
 
 def eval_cons(ast, env):
@@ -181,10 +193,23 @@ def eval_quote(ast, env):
 
 
 def eval_tail(ast, env):
+    lst = evaluate(ast[1], env)
+    return lst[1:]
+    """
     assert_exp_length(ast, 2)
-    ls = evaluate(ast[1], env)
-    if not is_list(ls):
-        raise LispError('The argument of tail should be a list.')
-    elif len(ls) == 0:
-        raise LispError('And empty list has no tail.')
-    return ls[1:]
+    try:
+        ls = evaluate(ast[1], env)
+        if not is_list(ls):
+            raise LispError('The argument of tail should be a list.')
+        elif len(ls) == 0:
+            raise LispError('And empty list has no tail.')
+        return ls[1:]
+    except Exception as e:
+        if type(ast[1]) == list:
+            if len(ast[1]) == 0:
+                raise LispError('And empty list has no tail.')
+            else:
+                return ast[1][1:]
+        else:
+            raise LispError('Failed to find tail of list: ' + str(e))
+    """

@@ -44,6 +44,8 @@ def test_evaluating_atom_function():
     assert_equals(True, evaluate(["atom", 42], Environment()))
     assert_equals(True, evaluate(["atom", ["quote", "foo"]], Environment()))
     assert_equals(False, evaluate(["atom", ["quote", [1, 2]]], Environment()))
+    assert_equals(False, evaluate(["atom", parse("'(1 2 3)")], Environment()))
+    assert_equals(False, evaluate(parse("(atom '(1 2 3))"), Environment()))
 
 def test_evaluating_eq_function():
     """The `eq` form is used to check whether two expressions are the same atom."""
