@@ -37,20 +37,31 @@
         (if (empty lst1) lst2
             (cons (head lst1) (append (tail lst1) lst2)))))
 
-(define filter2
-    (lambda (pred lst)
-        (foldleft (lambda (fun ls)
-                          (if (fun (head ls))
-                              (append (head ls))
-                              (ls))
-                   '() lst))))
-
 (define filter
     (lambda (pred lst)
         (if (empty lst) '()
             (if (pred (head lst))
                 (cons (head lst) (filter pred (tail lst)))
                 (filter pred (tail lst))))))
+
+(define map
+    (lambda (f lst)
+        (if (empty lst) '()
+            (cons (f (head lst)) (map f (tail lst))))))
+
+(define reverse2
+    (lambda (lst)
+        (if (empty lst) '()
+            (cons (reverse (tail lst)) (cons (head lst) '())))))
+
+(define reverse-acc
+    (lambda (lst acc)
+        (if ((length lst) == 1) (append acc (cons (head lst) '()))
+            (reverse-acc (tail lst) (append acc (cons (head lst)))))))
+
+(define reverse
+    (lambda (lst)
+        (reverse-acc lst '())))
 
 ;; FUNCTION TEMPLATE
 ;;
