@@ -102,23 +102,23 @@ def test_define():
     affects what is printed in the REPL)."""
 
     env = Environment()
-    evaluate(parse("(define x 1000)"), env)
+    evaluate(parse("(def x 1000)"), env)
     assert_equals(1000, env.lookup("x"))
 
 def test_define_with_wrong_number_of_arguments():
     """Defines should have exactly two arguments, or raise an error"""
 
     with assert_raises_regexp(LispError, "Wrong number of arguments"):
-        evaluate(parse("(define x)"), Environment())
+        evaluate(parse("(def x)"), Environment())
 
     with assert_raises_regexp(LispError, "Wrong number of arguments"):
-        evaluate(parse("(define x 1 2)"), Environment())
+        evaluate(parse("(def x 1 2)"), Environment())
 
 def test_define_with_nonsymbol_as_variable():
     """Defines require the first argument to be a symbol."""
 
     with assert_raises_regexp(LispError, "non-symbol"):
-        evaluate(parse("(define #t 42)"), Environment())
+        evaluate(parse("(def #t 42)"), Environment())
 
 def test_variable_lookup_after_define():
     """Test define and lookup variable in same environment.
@@ -126,5 +126,5 @@ def test_variable_lookup_after_define():
     This test should already be working when the above ones are passing."""
 
     env = Environment()
-    evaluate(parse("(define foo (+ 2 2))"), env)
+    evaluate(parse("(def foo (+ 2 2))"), env)
     assert_equals(4, evaluate("foo", env))

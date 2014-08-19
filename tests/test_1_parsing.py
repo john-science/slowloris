@@ -94,13 +94,13 @@ def test_parse_comments():
 
     program = """
     ;; this first line is a comment
-    (define variable
+    (def variable
         ; here is another comment
         (if #t 
             42 ; inline comment!
             (something else)))
     """
-    expected_ast = ['define', 'variable', 
+    expected_ast = ['def', 'variable', 
                         ['if', True, 
                             42, 
                             ['something', 'else']]]

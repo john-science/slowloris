@@ -34,7 +34,7 @@ def eval_list(ast, env):
         return eval_quote(ast, env)
     elif ast[0] == 'atom':
         return eval_atom(ast, env)
-    elif ast[0] == 'define':
+    elif ast[0] == 'def':
         return eval_define(ast, env)
     elif ast[0] == 'lambda':
         return eval_lambda(ast, env)

@@ -98,7 +98,7 @@ def test_filter():
     those elements that evaluate 'True'
     """
     interpret("""
-        (define even
+        (def even
             (lambda (x)
                 (eq (mod x 2) 0)))
     """, env)
@@ -107,7 +107,7 @@ def test_filter():
 def test_map():
     """'map' creates a new list by applying a function to each element of another"""
     interpret("""
-        (define inc
+        (def inc
             (lambda (x) (+ 1 x)))
     """, env)
     assert_equals("(2 3 4)", interpret("(map inc '(1 2 3))", env))

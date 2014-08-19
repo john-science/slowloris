@@ -148,7 +148,7 @@ def test_calling_very_simple_function_in_environment():
     replaced with its value should then be evaluated instead."""
 
     env = Environment()
-    evaluate(parse("(define add (lambda (x y) (+ x y)))"), env)
+    evaluate(parse("(def add (lambda (x y) (+ x y)))"), env)
     assert_is_instance(env.lookup("add"), Closure)
 
     result = evaluate(parse("(add 1 2)"), env)
@@ -214,7 +214,7 @@ def test_calling_with_wrong_number_of_arguments():
     """Functions should raise exceptions when called with wrong number of arguments."""
 
     env = Environment()
-    evaluate(parse("(define fn (lambda (p1 p2) 'what_ever))"), env)
+    evaluate(parse("(def fn (lambda (p1 p2) 'what_ever))"), env)
     error_msg = "wrong number of arguments, expected 2 got 3"
     with assert_raises_regexp(LispError, error_msg):
         evaluate(parse("(fn 1 2 3)"), env)
@@ -231,7 +231,7 @@ def test_calling_function_recursively():
 
     env = Environment()
     evaluate(parse("""
-        (define my-fn
+        (def my-fn
             ;; A meaningless, but recursive, function
             (lambda (x)
                 (if (eq x 0)
