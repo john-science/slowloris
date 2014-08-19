@@ -49,11 +49,6 @@
         (if (empty lst) '()
             (cons (f (head lst)) (map f (tail lst))))))
 
-(def reverse2
-    (lambda (lst)
-        (if (empty lst) '()
-            (cons (reverse (tail lst)) (cons (head lst) '())))))
-
 (def reverse-acc
     (lambda (lst acc)
         (if ((length lst) == 1) (append acc (cons (head lst) '()))
@@ -63,17 +58,9 @@
     (lambda (lst)
         (reverse-acc lst '())))
 
-;; FUNCTION TEMPLATE
-;;
-;;(def xxx
-;;    (lambda (a)
-;;        ())
-
 ;; IDEAS
-
-;; sum, length, filter, map, append, range, sort
-;; list operations: prepend, append
+;;
+;; list operations: reverse, range, sort, flatmap, prepend (just cons), accumulate/fold
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
-;; map, reduce (accumulate/fold), filter, flatmap
