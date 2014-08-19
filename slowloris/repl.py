@@ -26,7 +26,9 @@ def repl():
     while True:
         try:
             source = read_expression()
-            print(interpret(source, env))
+            result = interpret(source, env)
+            if result != '':
+                print(result)
         except LispError, e:
             print(colored("! ", "red") + faded(str(e.__class__.__name__) + ":") + str(e))
         except KeyboardInterrupt:

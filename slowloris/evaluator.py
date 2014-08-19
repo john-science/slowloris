@@ -54,8 +54,6 @@ def eval_list(ast, env):
         return eval_math(ast, env)
     elif is_closure(ast[0]):
         return eval_closure(ast, env)
-    #elif ast[0] in env.variables.keys():
-    #    return eval_env_vars(ast, env)
     elif is_symbol(ast[0]) or is_list(ast[0]):
         return evaluate([evaluate(ast[0], env)] + ast[1:], env)
     else:
@@ -93,13 +91,13 @@ def eval_define(ast, env):
         raise LispError('Wrong number of arguments')  # TODO: the original test is stupid
     elif not is_symbol(ast[1]):
         raise LispError('non-symbol')
-    
+
     if is_symbol(ast[2]) or is_list(ast[2]):
         env.set(ast[1], evaluate(ast[2], env))
     else:
         env.set(ast[1], ast[2])
-        
-    return 'Defined.'
+
+    return ''
 
 
 def eval_empty(ast, env):
