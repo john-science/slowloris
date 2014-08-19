@@ -18,10 +18,10 @@ Initially, it will *not* have:
 - Good performance
 - And much, much more
 
-The language should be able to interpret the following code by the time we are done:
+The syntax is that of the languages in the [Lisp family](parts/language.md):
 
 ```lisp
-(define fact 
+(def fact 
     ;; Factorial function
     (lambda (n) 
         (if (eq n 0) 
@@ -32,16 +32,14 @@ The language should be able to interpret the following code by the time we are d
 (fact 5)
 ```
 
-The syntax is that of the languages in the Lisp family. [Here is a more detailed description of the language.](parts/language.md)
-
 ### Prerequisites
 
 Before we get started, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
 *For long-term stabilibility, the language is based on Python 2.7, as the Python 3.x flavors are being continuously improved.*
 
-### Getting started!
+### API Documentation
 
-Initial development is split up into seven parts:
+A full guide to this little language can be found in the API:
 
 - [Part 1: Parsing Slow Loris](parts/1.md)
 - [Part 2: Evaluating Simple Expressions](parts/2.md)
