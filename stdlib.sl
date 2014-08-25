@@ -58,9 +58,10 @@
     (lambda (lst)
         (reverse-acc lst '())))
 
-;;(def range
-;;    (lambda (start end)
-;;        (if ()))
+(def range
+    (lambda (start end)
+        (if (> start end) '()
+            (cons start (range (+ 1 start) end)))))
 
 ;; IDEAS
 ;;
