@@ -49,12 +49,11 @@
         (if (empty lst) '()
             (cons (f (head lst)) (map f (tail lst))))))
 
-(def reverse-acc
-    (lambda (lst acc)
-        (if (empty lst) acc
-            (reverse-acc (tail lst) (cons (head lst) acc)))))
-
 (def reverse
+    (def reverse-acc
+        (lambda (lst acc)
+            (if (empty lst) acc
+                (reverse-acc (tail lst) (cons (head lst) acc)))))
     (lambda (lst)
         (reverse-acc lst '())))
 
