@@ -63,6 +63,11 @@
         (if (> start end) '()
             (cons start (range (+ 1 start) end)))))
 
+(def range-step
+    (lambda (start end step)
+        (if (> start end) '()
+            (cons start (range-step (+ step start) end)))))
+
 ;; IDEAS
 ;;
 ;; list operations: reverse, range, sort, flatmap, prepend (just cons), accumulate/fold
