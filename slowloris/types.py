@@ -22,7 +22,7 @@ class LispTypeError(LispError):
 class Closure:
 
     def __init__(self, env, params, body):
-        self.env = env  # .extend(params)
+        self.env = env
         self.params = params
         self.body = body
 
