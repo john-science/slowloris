@@ -123,12 +123,29 @@ def test_range():
     assert_equals("(1)", interpret("(range 1 1)", env))
     assert_equals("()", interpret("(range 2 1)", env))
 
-def test_sort():
-    """'sort' the elements of a list
+def test_bubble_sort():
+    """'bubble_sort' the elements of a list
     
-    NOTE: This is a VERY naive, first pass sort.
-          It will only sort short lists of integers.
+    A simple implementation for bubble sort on a linked list of numbers.
     """
     assert_equals("(1 2 3 4 5 6 7)",
-        interpret("(sort '(6 3 7 2 4 1 5))", env))
+        interpret("(bubble_sort '(6 3 7 2 4 1 5))", env))
+    assert_equals("()", interpret("'()", env))
+
+def test_insert_sort():
+    """'insert_sort' the elements of a list
+    
+    A simple implementation for insert sort on a linked list of numbers.
+    """
+    assert_equals("(1 2 3 4 5 6 7)",
+        interpret("(insert_sort '(6 3 7 2 4 1 5))", env))
+    assert_equals("()", interpret("'()", env))
+
+def test_quick_sort():
+    """'quick_sort' the elements of a list
+    
+    A simple implementation for quick sort on a linked list of numbers.
+    """
+    assert_equals("(1 2 3 4 5 6 7)",
+        interpret("(quick_sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))
