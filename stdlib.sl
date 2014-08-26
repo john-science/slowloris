@@ -67,9 +67,13 @@
         (if (> start end) '()
             (cons start (range-step (+ step start) end)))))
 
+;; (def bubble-sort
+;; (def insert-sort
+;; (def quick-sort
+
 ;; IDEAS
 ;;
-;; list operations: reverse, range, sort, flatmap, prepend (just cons), accumulate/fold
+;; list operations: sort, flatmap, accumulate/fold
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
