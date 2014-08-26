@@ -70,10 +70,11 @@
 ;; (def bubble-sort
 ;; (def insert-sort
 ;; (def quick-sort
+;; (def merge-sort
 
 ;; IDEAS
 ;;
-;; list operations: sort, flatmap, accumulate/fold
+;; list operations: list-first-n, list-last-n, list-slice, flatmap, accumulate/fold
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
