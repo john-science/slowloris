@@ -11,24 +11,15 @@ path = join(dirname(relpath(__file__)), '..', 'stdlib.sl')
 interpret_file(path, env)
 
 """
-Consider these tests as suggestions for what a standard library for
-your language could contain. Each test function tests the implementation
-of one stdlib function.
+The standard library is implemented in the file `stdlib.sl` in the
+Slow Loris root directory.
 
-Put the implementation in the file `stdlib.sl` at the root directory
-of the repository. The first function, `not` is already defined for you.
-It's your job to create the rest, or perhaps somthing completely different?
-
-Anything you put in `stdlib.sl` is also available from the REPL, so feel
+Anything inside `stdlib.sl` is also available from the REPL, so feel
 free to test things out there.
 
     $ ./repl
     →  (not #t)
     #f
-
-PS: Note that in these tests, `interpret` is used. In addition to parsing
-and evaluating, it "unparses" the result, hence strings such as "#t" as the
-expected result instead of `True`.
 """
 
 def test_not():
