@@ -74,7 +74,7 @@
 
 ;; IDEAS
 ;;
-;; list operations: list-first-n, list-last-n, list-slice, flatmap, accumulate/fold
+;; list operations: list-first-n, list-last-n, list-slice, nth, split, flatmap, accumulate/fold
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
