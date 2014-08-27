@@ -114,6 +114,12 @@ def test_range():
     assert_equals("(1)", interpret("(range 1 1)", env))
     assert_equals("()", interpret("(range 2 1)", env))
 
+def test_range_step():
+    """'range-step' creats a list of integers from 'start' to 'end'"""
+    assert_equals("(1 5 9 13)", interpret("(range-step 1 15 4)", env))
+    assert_equals("(1)", interpret("(range-step 1 1 1)", env))
+    assert_equals("()", interpret("(range-step 2 1 1)", env))
+
 def test_bubble_sort():
     """'bubble_sort' the elements of a list
     

@@ -49,11 +49,12 @@
         (if (empty lst) '()
             (cons (f (head lst)) (map f (tail lst))))))
 
+(def reverse-acc
+    (lambda (l1 acc)
+        (if (empty l1) acc
+            (reverse-acc (tail l1) (cons (head l1) acc)))))
+
 (def reverse
-    (def reverse-acc
-        (lambda (lst acc)
-            (if (empty lst) acc
-                (reverse-acc (tail lst) (cons (head lst) acc)))))
     (lambda (lst)
         (reverse-acc lst '())))
 
@@ -71,7 +72,8 @@
 ;; (def insert-sort
 ;; (def quick-sort
 ;; (def merge-sort
-
+;;
+;;
 ;; IDEAS
 ;;
 ;; list operations: list-first-n, list-last-n, list-slice, nth, split, flatmap, accumulate/fold
