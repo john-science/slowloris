@@ -49,6 +49,7 @@
         (if (empty lst) '()
             (cons (f (head lst)) (map f (tail lst))))))
 
+;; TODO: I want to be able to put `reverse-acc` inside `reverse`.
 (def reverse-acc
     (lambda (l1 acc)
         (if (empty l1) acc
@@ -66,7 +67,25 @@
 (def range-step
     (lambda (start end step)
         (if (> start end) '()
-            (cons start (range-step (+ step start) end)))))
+            (cons start (range-step (+ step start) end step)))))
+
+(def bubble-sort
+    (lambda (lst)
+        (bubble (tail lst) '() (head lst) #t)))
+
+(def bubble
+    (lambda (lst new_lst current done)
+        (if (empty lst) (if (done) new_lst
+                            (bubble '() (cons current new_lst) '() #t))
+            (if (< (head lst) current) (bubble (tail lst) (cons (head lst) new_lst) current #f)
+                (bubble (tail lst) (cons current new_lst) (head lst) done)))))
+
+(def bubble1
+    (lambda (lst new_lst current done)
+        (if (empty lst) (if (done) new_lst
+                            (bubble (tail lst) '() (head lst) #t))
+            (if (> next current) (bubble (tail lst) current (cons next lst) #f)
+                (bubble (tail lst) next (cons current lst) done)))))
 
 ;; (def bubble-sort
 ;; (def insert-sort
