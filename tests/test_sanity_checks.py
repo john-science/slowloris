@@ -10,7 +10,7 @@ def test_gcd():
     """Tests Greates Common Dividor (GCD)."""
 
     program = """
-        (define gcd
+        (def gcd
             (lambda (a b)
                 (if (eq b 0)
                     a 
