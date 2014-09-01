@@ -87,10 +87,40 @@
             (if (> next current) (bubble (tail lst) current (cons next lst) #f)
                 (bubble (tail lst) next (cons current lst) done)))))
 
-;; (def bubble-sort
-;; (def insert-sort
-;; (def quick-sort
-;; (def merge-sort
+(def insert-sort
+    (lambda (lst)
+        (insert-loop lst '())))
+
+(def insert-loop
+    (lambda (i_list new_lst)
+        (if (empty i_list) new_lst
+            (insert-loop (tail i_list) (insert-ordered new_lst (head i_list))))))
+
+(def insert-ordered
+    (lambda (o_lst item)
+        if (empty o_lst) (cons item '())
+            (if (< (head o_lst) item) (cons (head o_lst) (insert-ordered (tail o_lst) item))
+                (cons item (insert-ordered (tail o_lst) (head o_lst))))))
+
+(def quicksort
+    (lambda (lst)
+        (if (< (length lst) 1) lst
+            (append (create_left_lst (tail lst) (head lst))
+                    (create_right_lst (tail lst) (head lst))))))
+
+(def create_left_lst
+    (lambda (l1 p)
+        (if (empty l1) '()
+            (if (<= (head l1) p) (cons (head l1) (create_left_lst (tail l1) p))
+                (create_left_lst (tail l1) p)))))
+
+(def create_right_lst
+    (lambda (l2 p)
+        (if (empty l2) '()
+            (if (<= (head l2) p) (cons (head l2) (create_right_lst (tail l2) p))
+                (create_right_lst (tail l2) p)))))
+
+;; (def merge-sort XXX)
 ;;
 ;;
 ;; IDEAS
