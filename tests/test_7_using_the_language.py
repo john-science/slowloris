@@ -120,6 +120,15 @@ def test_range_step():
     assert_equals("(1)", interpret("(range-step 1 1 1)", env))
     assert_equals("()", interpret("(range-step 2 1 1)", env))
 
+def test_quick_sort():
+    """'quick-sort' the elements of a list
+    
+    A simple implementation for quick sort on a linked list of numbers.
+    """
+    assert_equals("(1 2 3 4 5 6 7)",
+        interpret("(quick-sort '(6 3 7 2 4 1 5))", env))
+    assert_equals("()", interpret("'()", env))
+
 def test_bubble_sort():
     """'bubble-sort' the elements of a list
     
@@ -136,13 +145,4 @@ def test_insert_sort():
     """
     assert_equals("(1 2 3 4 5 6 7)",
         interpret("(insert-sort '(6 3 7 2 4 1 5))", env))
-    assert_equals("()", interpret("'()", env))
-
-def test_quick_sort():
-    """'quick-sort' the elements of a list
-    
-    A simple implementation for quick sort on a linked list of numbers.
-    """
-    assert_equals("(1 2 3 4 5 6 7)",
-        interpret("(quick-sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))
