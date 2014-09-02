@@ -71,21 +71,18 @@
 
 (def bubble-sort
     (lambda (lst)
-        (bubble (tail lst) '() (head lst) #t)))
+        (bubble-loop lst #t)))
+
+(def bubble-loop
+    (lambda (lst swapped)
+        (if swapped (bubble (tail lst) '() (head lst) #t)
+            (lst))))
 
 (def bubble
-    (lambda (lst new_lst current done)
-        (if (empty lst) (if (done) new_lst
-                            (bubble '() (cons current new_lst) '() #t))
+    (lambda (lst new_lst current swapped)
+        (if (empty lst) (bubble-loop new_lst swapped)
             (if (< (head lst) current) (bubble (tail lst) (cons (head lst) new_lst) current #f)
-                (bubble (tail lst) (cons current new_lst) (head lst) done)))))
-
-(def bubble1
-    (lambda (lst new_lst current done)
-        (if (empty lst) (if (done) new_lst
-                            (bubble (tail lst) '() (head lst) #t))
-            (if (> next current) (bubble (tail lst) current (cons next lst) #f)
-                (bubble (tail lst) next (cons current lst) done)))))
+                (bubble (tail lst) (cons current new_lst) (head lst) #t)))))
 
 (def insert-sort
     (lambda (lst)
@@ -96,11 +93,11 @@
         (if (empty i_list) new_lst
             (insert-loop (tail i_list) (insert-ordered new_lst (head i_list))))))
 
-(def insert-ordered
-    (lambda (o_lst item)
-        if (empty o_lst) (cons item '())
-            (if (< (head o_lst) item) (cons (head o_lst) (insert-ordered (tail o_lst) item))
-                (cons item (insert-ordered (tail o_lst) (head o_lst))))))
+;;(def insert-ordered
+;;    (lambda (o_lst item)
+;;        if (empty o_lst) (cons item '())
+;;            (if (< (head o_lst) item) (cons (head o_lst) (insert-ordered (tail o_lst) item))
+;;                (cons item (insert-ordered (tail o_lst) (head o_lst))))))
 
 (def quicksort
     (lambda (lst)
