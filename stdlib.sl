@@ -72,7 +72,7 @@
 ;; list-sorting algorithms
 
 ;; Quick Sort
-(def small-or-equal-filter
+(def smaller-or-equal-filter
     (lambda (lst pivot)
         (filter (lambda (v) (<= v pivot)) lst)))
 
@@ -83,9 +83,9 @@
 (def quick-sort
     (lambda (lst)
         (if (empty lst) lst
-            (append (append (sort (smaller-or-equal-filter (tail lst) (head lst)))
+            (append (append (quick-sort (smaller-or-equal-filter (tail lst) (head lst)))
                 (cons (head lst) '()))
-                (sort (greater-filter (tail lst) (head lst)))))))
+                (quick-sort (greater-filter (tail lst) (head lst)))))))
 
 ;; Bubble Sort
 (def bubble-sort
