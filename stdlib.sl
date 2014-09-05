@@ -87,31 +87,41 @@
                 (cons (head lst) '()))
                 (quick-sort (greater-filter (tail lst) (head lst)))))))
 
-;; Bubble Sort
-(def bubble-sort
-    (lambda (lst)
-        (bubble-loop lst #t)))
-
-(def bubble-loop
-    (lambda (lst swapped)
-        (if swapped (bubble (tail lst) '() (head lst) #t)
-            (lst))))
-
-(def bubble
-    (lambda (lst new_lst current swapped)
-        (if (empty lst) (bubble-loop new_lst swapped)
-            (if (< (head lst) current) (bubble (tail lst) (cons (head lst) new_lst) current #f)
-                (bubble (tail lst) (cons current new_lst) (head lst) #t)))))
-
 ;; Insert Sort
+;; inserts an item into an ordered list, preserving the order
+(def insert-into-ordered
+    (lambda (lst item)
+        (if (empty lst) (cons item '())
+            (if (> item (head lst)) (cons (head lst) (insert-into-ordered (tail lst) item))
+                (cons item lst)))))
+
+;; a single step in the Insert Sort algorithm
+(def insert-sort-acc
+    (lambda (sorted unsorted)
+        (if (empty unsorted) sorted
+            (insert-sort-acc (insert-into-ordered sorted (head unsorted)) (tail unsorted)))))
+
+;; insert sort, build a progressively larger sorted list, from an unordered one
 (def insert-sort
     (lambda (lst)
-        (insert-loop lst '())))
+        (if (empty lst) '()
+            (insert-sort-acc (cons (head lst) '()) (tail lst)))))
 
-(def insert-loop
-    (lambda (i_list new_lst)
-        (if (empty i_list) new_lst
-            (insert-loop (tail i_list) (insert-ordered new_lst (head i_list))))))
+;; Bubble Sort
+;;(def bubble-sort
+;;    (lambda (lst)
+;;        (bubble-loop lst #t)))
+;;
+;;(def bubble-loop
+;;    (lambda (lst swapped)
+;;        (if swapped (bubble (tail lst) '() (head lst) #t)
+;;            (lst))))
+;;
+;;(def bubble
+;;    (lambda (lst new_lst current swapped)
+;;        (if (empty lst) (bubble-loop new_lst swapped)
+;;            (if (< (head lst) current) (bubble (tail lst) (cons (head lst) new_lst) current #f)
+;;                (bubble (tail lst) (cons current new_lst) (head lst) #t)))))
 
 
 ;; (def merge-sort XXX)
