@@ -107,29 +107,10 @@
         (if (empty lst) '()
             (insert-sort-acc (cons (head lst) '()) (tail lst)))))
 
-;; Bubble Sort
-;;(def bubble-sort
-;;    (lambda (lst)
-;;        (bubble-loop lst #t)))
-;;
-;;(def bubble-loop
-;;    (lambda (lst swapped)
-;;        (if swapped (bubble (tail lst) '() (head lst) #t)
-;;            (lst))))
-;;
-;;(def bubble
-;;    (lambda (lst new_lst current swapped)
-;;        (if (empty lst) (bubble-loop new_lst swapped)
-;;            (if (< (head lst) current) (bubble (tail lst) (cons (head lst) new_lst) current #f)
-;;                (bubble (tail lst) (cons current new_lst) (head lst) #t)))))
-
-
-;; (def merge-sort XXX)
-;;
-;;
 ;; IDEAS
 ;;
 ;; list operations: list-first-n, list-last-n, list-slice, nth, split, flatmap, accumulate/fold
 ;; set: an unsorted list object with setters that demand uniqueness
 ;; dictionaries and arrays?
 ;; str(), int(), float(), len(), exit(), raise?, try, except?
+;; sorts: merge sort

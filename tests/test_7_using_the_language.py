@@ -137,12 +137,3 @@ def test_insert_sort():
     assert_equals("(1 2 3 4 5 6 7)",
         interpret("(insert-sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))
-
-#def test_bubble_sort():
-#    """'bubble-sort' the elements of a list
-#    
-#    A simple implementation for bubble sort on a linked list of numbers.
-#    """
-#    assert_equals("(1 2 3 4 5 6 7)",
-#        interpret("(bubble-sort '(6 3 7 2 4 1 5))", env))
-#    assert_equals("()", interpret("'()", env))
