@@ -24,8 +24,8 @@ def test_creating_lists_by_quoting():
 def test_creating_list_with_cons():
     """The `cons` functions prepends an element to the front of a list."""
 
-    result = evaluate(parse("(cons 0 '(1 2 3))"), Environment())
-    assert_equals(parse("(0 1 2 3)"), result)
+    result = evaluate(parse("(cons 0 '(1.1 2.2 3.3))"), Environment())
+    assert_equals(parse("(0 1.1 2.2 3.3)"), result)
 
 def test_creating_longer_lists_with_only_cons():
     """`cons` needs to evaluate it's arguments.

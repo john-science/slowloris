@@ -57,6 +57,8 @@ def test_greater_or_equal():
 def test_less_or_equal():
     """test the mathematical 'less than or equal to' operator"""
     assert_equals("#t", interpret('(<= 1 2)', env))
+    assert_equals("#t", interpret('(<= 1.1 2.0)', env))
+    assert_equals("#t", interpret('(<= 1.75 2)', env))
     assert_equals("#t", interpret('(<= 2 2)', env))
     assert_equals("#f", interpret('(<= 2 1)', env))
 
@@ -69,6 +71,7 @@ def test_less_than():
 def test_sum():
     """sum all of the elements in a list using the '+' operator"""
     assert_equals("5", interpret("(sum '(1 1 1 1 1))", env))
+    assert_equals("6.5", interpret("(sum '(1.1 1.2 1.3 1.4 1.5))", env))
     assert_equals("10", interpret("(sum '(1 2 3 4))", env))
     assert_equals("0", interpret("(sum '())", env))
 

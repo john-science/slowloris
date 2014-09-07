@@ -85,7 +85,7 @@ def eval_cons(ast, env):
         raise LispError('The second argument of cons should be a list.')
     return [evaluate(ast[1], env)] + ls
 
-
+'''
 def eval_define(ast, env):
     if len(ast) != 3:
         raise LispError('Wrong number of arguments')  # TODO: the original test is stupid
@@ -98,6 +98,15 @@ def eval_define(ast, env):
         env.set(ast[1], ast[2])
 
     return ''
+'''
+
+
+def eval_define(ast, env):
+    assert_valid_definition(ast[1:])
+    symbol = ast[1]
+    value = evaluate(ast[2], env)
+    env.set(symbol, value)
+    return symbol
 
 
 def eval_empty(ast, env):
@@ -142,6 +151,7 @@ def eval_if(ast, env):
         return evaluate(ast[3], env)
 
 
+'''
 def eval_lambda(ast, env):
     # assert_exp_length(ast, 3)  # TODO: The test is stupid. Fix it.
     if len(ast) != 3:
@@ -149,6 +159,17 @@ def eval_lambda(ast, env):
     elif not is_list(ast[1]):
         raise LispError('The parameters of lambda should be a list.')
     return Closure(env, ast[1], ast[2])
+'''
+
+
+def eval_lambda(ast, env):
+    if len(ast) != 3:
+        raise LispError("Wrong number of arguments to lambda form")
+    params = ast[1]
+    if not is_list(params):
+        raise LispError("Lambda parameters as non-list")
+    body = ast[2]
+    return Closure(env, params, body)
 
 
 def eval_math(ast, env):

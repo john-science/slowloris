@@ -66,9 +66,12 @@ def test_basic_math_operators():
     """
 
     assert_equals(4, evaluate(["+", 2, 2], Environment()))
+    assert_equals(4.0, evaluate(["+", 2.0, 2.0], Environment()))
     assert_equals(1, evaluate(["-", 2, 1], Environment()))
+    assert_equals(10.0, evaluate(["-", 22.2, 12.2], Environment()))
     assert_equals(3, evaluate(["/", 6, 2], Environment()))
     assert_equals(3, evaluate(["/", 7, 2], Environment()))
+    assert_equals(3.5, evaluate(["/", 7.0, 2.0], Environment()))
     assert_equals(6, evaluate(["*", 2, 3], Environment()))
     assert_equals(1, evaluate(["mod", 7, 2], Environment()))
     assert_equals(True, evaluate([">", 7, 2], Environment()))
@@ -82,6 +85,7 @@ def test_combined_math_operators():
     """
 
     assert_equals(10, evaluate(parse("(+ (+ 1 2) (+ 3 4))"), Environment()))
+    assert_equals(10.8123, evaluate(parse("(+ (+ 1.2 2.0123) (+ 3.5 4.1))"), Environment()))
 
 def test_math_oprators_only_work_on_numbers():
     """The math functions should only allow numbers as arguments."""

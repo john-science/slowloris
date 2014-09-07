@@ -102,8 +102,8 @@ def test_define():
     affects what is printed in the REPL)."""
 
     env = Environment()
-    evaluate(parse("(def x 1000)"), env)
-    assert_equals(1000, env.lookup("x"))
+    evaluate(parse("(def x 100.25)"), env)
+    assert_equals(100.25, env.lookup("x"))
 
 def test_define_with_wrong_number_of_arguments():
     """Defines should have exactly two arguments, or raise an error"""
@@ -126,5 +126,5 @@ def test_variable_lookup_after_define():
     This test should already be working when the above ones are passing."""
 
     env = Environment()
-    evaluate(parse("(def foo (+ 2 2))"), env)
-    assert_equals(4, evaluate("foo", env))
+    evaluate(parse("(def foo (+ 2.1 2.1))"), env)
+    assert_equals(4.2, evaluate("foo", env))
