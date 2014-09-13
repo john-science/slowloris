@@ -38,8 +38,8 @@ def test_find_matching_paren_throws_exception_on_no_closing_paren():
 
 def test_unparse_atoms():
     assert_equals("123", unparse(123))
-    assert_equals("#t", unparse(True))
-    assert_equals("#f", unparse(False))
+    assert_equals("True", unparse(True))
+    assert_equals("False", unparse(False))
     assert_equals("foo", unparse("foo"))
 
 def test_unparse_list():
@@ -50,8 +50,8 @@ def test_unparse_quotes():
         ["quote", ["quote", ["foo", ["quote", "bar"], ["quote", [1, 2]]]]]))
 
 def test_unparse_bool():
-    assert_equals("#t", unparse(True))
-    assert_equals("#f", unparse(False))
+    assert_equals("True", unparse(True))
+    assert_equals("False", unparse(False))
 
 def test_unparse_int():
     assert_equals("1", unparse(1))
@@ -65,7 +65,7 @@ def test_unparse_symbol():
 
 def test_unparse_list():
     assert_equals("(1 2 3)", unparse([1, 2, 3]))
-    assert_equals("(if #t 42 #f)",
+    assert_equals("(if True 42 False)",
         unparse(["if", True, 42, False]))
 
 def test_unparse_quotes():

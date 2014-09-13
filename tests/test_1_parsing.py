@@ -16,11 +16,11 @@ def test_parse_single_symbol():
 def test_parse_boolean():
     """Parsing single booleans.
 
-    Booleans are the special symbols #t and #f. In the ASTs they are represented 
+    Booleans are the special symbols True and False. In the ASTs they are represented 
     by Pythons True and False, respectively. """
 
-    assert_equals(True, parse('#t'))
-    assert_equals(False, parse('#f'))
+    assert_equals(True, parse('True'))
+    assert_equals(False, parse('False'))
 
 def test_parse_integer():
     """Parsing single integer.
@@ -52,12 +52,12 @@ def test_parse_list_of_mixed_types():
     When parsing lists, make sure each of the sub-expressions are also parsed 
     properly."""
 
-    assert_equals(['foo', True, 123], parse('(foo #t 123)'))
+    assert_equals(['foo', True, 123], parse('(foo True 123)'))
 
 def test_parse_on_nested_list():
     """Parsing should also handle nested lists properly."""
 
-    program = '(foo (bar ((#t)) x) (baz y))'
+    program = '(foo (bar ((True)) x) (baz y))'
     ast = ['foo', 
             ['bar', [[True]], 'x'], 
             ['baz', 'y']]
@@ -96,7 +96,7 @@ def test_parse_comments():
     ;; this first line is a comment
     (def variable
         ; here is another comment
-        (if #t 
+        (if True 
             42 ; inline comment!
             (something else)))
     """

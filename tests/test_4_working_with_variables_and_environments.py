@@ -77,7 +77,7 @@ with variables.
 """
 
 def test_evaluating_symbol():
-    """Symbols (other than #t and #f) are treated as variable references.
+    """Symbols (other than True and False) are treated as variable references.
 
     When evaluating a symbol, the corresponding value should be looked up in the 
     environment."""
@@ -118,7 +118,7 @@ def test_define_with_nonsymbol_as_variable():
     """Defines require the first argument to be a symbol."""
 
     with assert_raises_regexp(LispError, "non-symbol"):
-        evaluate(parse("(def #t 42)"), Environment())
+        evaluate(parse("(def True 42)"), Environment())
 
 def test_variable_lookup_after_define():
     """Test define and lookup variable in same environment.

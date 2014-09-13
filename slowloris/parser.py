@@ -56,9 +56,9 @@ def parse_text(source):
 def parse_type(src):
     """convert a string to an implicit type, if it exists."""
     # TODO: This seems clunky. Is it slow? Can I make it easier to extend to more types?
-    if src == '#f':
+    if src == 'False':
         return False
-    elif src == '#t':
+    elif src == 'True':
         return True
     elif src.isdigit():
         return int(src)
@@ -167,7 +167,7 @@ def unparse(ast):
     """Turns an AST back into lisp program source"""
 
     if is_boolean(ast):
-        return "#t" if ast else "#f"
+        return 'True' if ast else 'False'
     elif is_list(ast):
         if len(ast) > 0 and ast[0] == "quote":
             return "'%s" % unparse(ast[1])

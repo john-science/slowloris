@@ -18,55 +18,55 @@ Anything inside `stdlib.sl` is also available from the REPL, so feel
 free to test things out there.
 
     $ ./repl
-    →  (not #t)
-    #f
+    →  (not True)
+    False
 """
 
 def test_not():
     """logical operator 'not' should return opposite of given boolean value"""
-    assert_equals("#t", interpret('(not #f)', env))
-    assert_equals("#f", interpret('(not #t)', env))
+    assert_equals("True", interpret('(not False)', env))
+    assert_equals("False", interpret('(not True)', env))
 
 def test_or():
     """test the logical 'or' operator"""
-    assert_equals("#f", interpret('(or #f #f)', env))
-    assert_equals("#t", interpret('(or #t #f)', env))
-    assert_equals("#t", interpret('(or #f #t)', env))
-    assert_equals("#t", interpret('(or #t #t)', env))
+    assert_equals("False", interpret('(or False False)', env))
+    assert_equals("True", interpret('(or True False)', env))
+    assert_equals("True", interpret('(or False True)', env))
+    assert_equals("True", interpret('(or True True)', env))
 
 def test_and():
     """test the logical 'and' operator"""
-    assert_equals("#f", interpret('(and #f #f)', env))
-    assert_equals("#f", interpret('(and #t #f)', env))
-    assert_equals("#f", interpret('(and #f #t)', env))
-    assert_equals("#t", interpret('(and #t #t)', env))
+    assert_equals("False", interpret('(and False False)', env))
+    assert_equals("False", interpret('(and True False)', env))
+    assert_equals("False", interpret('(and False True)', env))
+    assert_equals("True", interpret('(and True True)', env))
 
 def test_xor():
     """test the logical 'exclusive or' operator"""
-    assert_equals("#f", interpret('(xor #f #f)', env))
-    assert_equals("#t", interpret('(xor #t #f)', env))
-    assert_equals("#t", interpret('(xor #f #t)', env))
-    assert_equals("#f", interpret('(xor #t #t)', env))
+    assert_equals("False", interpret('(xor False False)', env))
+    assert_equals("True", interpret('(xor True False)', env))
+    assert_equals("True", interpret('(xor False True)', env))
+    assert_equals("False", interpret('(xor True True)', env))
 
 def test_greater_or_equal():
     """test the mathematical 'greater than or equal to' operator"""
-    assert_equals("#f", interpret('(>= 1 2)', env))
-    assert_equals("#t", interpret('(>= 2 2)', env))
-    assert_equals("#t", interpret('(>= 2 1)', env))
+    assert_equals("False", interpret('(>= 1 2)', env))
+    assert_equals("True", interpret('(>= 2 2)', env))
+    assert_equals("True", interpret('(>= 2 1)', env))
 
 def test_less_or_equal():
     """test the mathematical 'less than or equal to' operator"""
-    assert_equals("#t", interpret('(<= 1 2)', env))
-    assert_equals("#t", interpret('(<= 1.1 2.0)', env))
-    assert_equals("#t", interpret('(<= 1.75 2)', env))
-    assert_equals("#t", interpret('(<= 2 2)', env))
-    assert_equals("#f", interpret('(<= 2 1)', env))
+    assert_equals("True", interpret('(<= 1 2)', env))
+    assert_equals("True", interpret('(<= 1.1 2.0)', env))
+    assert_equals("True", interpret('(<= 1.75 2)', env))
+    assert_equals("True", interpret('(<= 2 2)', env))
+    assert_equals("False", interpret('(<= 2 1)', env))
 
 def test_less_than():
     """test the mathematical 'less than' operator"""
-    assert_equals("#t", interpret('(< 1 2)', env))
-    assert_equals("#f", interpret('(< 2 2)', env))
-    assert_equals("#f", interpret('(< 2 1)', env))
+    assert_equals("True", interpret('(< 1 2)', env))
+    assert_equals("False", interpret('(< 2 2)', env))
+    assert_equals("False", interpret('(< 2 1)', env))
 
 def test_sum():
     """sum all of the elements in a list using the '+' operator"""
@@ -78,13 +78,13 @@ def test_sum():
 def test_length():
     """determine the length of a list"""
     assert_equals("5", interpret("(length '(1 2 3 4 5))", env))
-    assert_equals("3", interpret("(length '(#t '(1 2 3) 'foo-bar))", env))
+    assert_equals("3", interpret("(length '(True '(1 2 3) 'foo-bar))", env))
     assert_equals("0", interpret("(length '())", env))
 
 def test_append():
     """'append' should combine two lists together, in the given order"""
     assert_equals("(1 2 3 4 5)", interpret("(append '(1 2) '(3 4 5))", env))
-    assert_equals("(#t #f 'maybe)", interpret("(append '(#t) '(#f 'maybe))", env))
+    assert_equals("(True False 'maybe)", interpret("(append '(True) '(False 'maybe))", env))
     assert_equals("()", interpret("(append '() '())", env))
 
 def test_filter():

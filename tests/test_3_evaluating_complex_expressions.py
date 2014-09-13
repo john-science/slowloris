@@ -17,7 +17,7 @@ def test_nested_expression():
     If this test is failing, make sure that `+`, `>` and so on is evaluating 
     their arguments before operating on them."""
 
-    nested_expression = parse("(eq #f (> (- (+ 1 3) (* 2 (mod 7 4))) 4))")
+    nested_expression = parse("(eq False (> (- (+ 1 3) (* 2 (mod 7 4))) 4))")
     assert_equals(True, evaluate(nested_expression, Environment()))
 
 
@@ -28,13 +28,13 @@ def test_basic_if_statement():
     the second argument is evaluated and returned. Otherwise the third and last argument
     is evaluated and returned instead."""
 
-    if_expression = parse("(if #t 42 1000)")
+    if_expression = parse("(if True 42 1000)")
     assert_equals(42, evaluate(if_expression, Environment()))
 
 def test_that_only_correct_branch_is_evaluated():
     """The branch of the if statement that is discarded should never be evaluated."""
 
-    if_expression = parse("(if #f (this should not be evaluated) 42)")
+    if_expression = parse("(if False (this should not be evaluated) 42)")
     assert_equals(42, evaluate(if_expression, Environment()))
 
 def test_if_with_sub_expressions():

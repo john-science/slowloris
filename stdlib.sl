@@ -2,19 +2,19 @@
 
 (def not
     (lambda (b)
-        (if b #f #t)))
+        (if b False True)))
 
 (def or
     (lambda (a b)
-        (if a #t (if b #t #f))))
+        (if a True (if b True False))))
 
 (def and
     (lambda (a b)
-        (if a (if b #t #f) #f)))
+        (if a (if b True False) False)))
 
 (def xor
     (lambda (a b)
-        (if a (if b #f #t) (if b #t #f))))
+        (if a (if b False True) (if b True False))))
 
 ;; list functions
 

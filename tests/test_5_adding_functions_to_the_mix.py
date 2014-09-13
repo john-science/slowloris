@@ -112,7 +112,7 @@ def test_call_to_function_should_evaluate_arguments():
 
     env = Environment()
     closure = evaluate(parse("(lambda (a) (+ a 5))"), env)
-    ast = [closure, parse("(if #f 0 (+ 10 10))")]
+    ast = [closure, parse("(if False 0 (+ 10 10))")]
 
     assert_equals(25, evaluate(ast, env))
 
@@ -173,7 +173,7 @@ def test_calling_complex_expression_which_evaluates_to_function():
     already know how to evaluate."""
 
     ast = parse("""
-        ((if #f
+        ((if False
              wont-evaluate-this-branch
              (lambda (x) (+ x y)))
          2)
@@ -191,7 +191,7 @@ def test_calling_atom_raises_exception():
     """A function call to a non-function should result in an error."""
 
     with assert_raises_regexp(LispError, "not a function"):
-        evaluate(parse("(#t 'foo 'bar)"), Environment())
+        evaluate(parse("(True 'foo 'bar)"), Environment())
     with assert_raises_regexp(LispError, "not a function"):
         evaluate(parse("(42)"), Environment())
 

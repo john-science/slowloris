@@ -4,7 +4,7 @@ The syntax of our little language is Lisp-inspired. This is mainly to make it ea
 
 We will handle two types of expressions: **atoms** and **lists**. 
 
-- Atoms can be numbers (`42`), booleans(`#t` and `#f`) or symbols (`foobar`).
+- Atoms can be numbers (`42`), booleans(`True` and `False`) or symbols (`foobar`).
 - Lists consists of a series of zero or more expressions (other atoms or lists) separated by spaces and enclosed by parentheses.
 
 ### Evaluation rules
@@ -22,7 +22,7 @@ Here is a brief explanation of each form:
 
 - `quote` takes one argument which is returned without it being evaluated.
 - `atom` is a predicate indicating whether or not it's one argument is an atom.
-- `eq` returns true (`#t`) if both its arguments are the same atom.
+- `eq` returns true (`True`) if both its arguments are the same atom.
 - `+`, `-`, `*`, `/`, `mod` and `>` all take two arguments, and does exactly what you would expect. (Note that since we have no floating point numbers, the `/` represent integer division.)
 - `if` is the conditional, taking three arguments. It's return value is the result of evaluating the second or third argument, depending on the value of the first one.
 - `define` is used to define new variables in the environment.
