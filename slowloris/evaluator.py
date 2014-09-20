@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from types import Environment, LispError, LispTypeError, Closure
-from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_number
+from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_number, is_string
 from asserts import assert_exp_length, assert_valid_definition, assert_boolean
 from parser import unparse
 
@@ -44,6 +44,8 @@ def eval_list(ast, env):
         return eval_empty(ast, env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
         return eval_math(ast, env)
+    elif ast[0] in ['string_append', 'string_split']:
+        return eval_string(ast, env)
     elif is_closure(ast[0]):
         return apply(ast, env)
     elif is_symbol(ast[0]) or is_list(ast[0]):
@@ -165,6 +167,19 @@ def eval_math(ast, env):
 def eval_quote(ast, env):
     assert_exp_length(ast, 2)
     return ast[1]
+
+
+def eval_string(ast, env):
+    """helper method to evaluate simple string operations"""
+    ops = {
+        'string_append': lambda a, b: a[:-1] + b[1:],
+        'string_split': lambda a, b: "'" + '("' + '" "'.join(a[1:-1].split(b[1:-1])) + '")'
+    }
+    op = ast[0]
+    if is_string(ast[1]) and is_string(ast[2]):
+        return ops[op](ast[1], ast[2])
+    else:
+        raise LispTypeError("Unsupported argument type for %s" % op)
 
 
 def eval_tail(ast, env):

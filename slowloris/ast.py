@@ -53,7 +53,7 @@ def is_number(x):
 def is_string(x):
     if isinstance(x, str):
         return x[0] == '"' and x[-1] == '"'
-    return false
+    return False
 
 
 def is_symbol(x):
