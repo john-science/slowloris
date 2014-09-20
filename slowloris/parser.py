@@ -127,8 +127,8 @@ def split_exps(source):
 def first_expression(source):
     """Split string into (exp, rest) where exp is the
     first expression in the string and rest is the
-    rest of the string after this expression."""
-
+    rest of the string after this expression.
+    """
     source = source.strip()
     if source[0] == "'":
         exp, rest = first_expression(source[1:])
@@ -137,7 +137,8 @@ def first_expression(source):
         last = find_matching_paren(source)
         return source[:last + 1], source[last + 1:]
     else:
-        match = re.match(r"^[^\s)']+", source)
+        # This regex also uses quotes to Identify strings.
+        match = re.match(r'(?:"[^"]*"|[^\s"])+', source)
         end = match.end()
         atom = source[:end]
         return atom, source[end:]
