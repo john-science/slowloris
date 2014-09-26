@@ -35,11 +35,11 @@ The syntax is that of the languages in the [Lisp family](parts/language.md):
 ### Prerequisites
 
 Before we get started, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
-*For long-term stabilibility, the language is based on Python 2.7, as the Python 3.x flavors are being continuously improved.*
+*For long-term stabilibility, the language is based on Python 2.7.*
 
 ### API Documentation
 
-A full guide to this little language can be found in the API:
+The full documentation to this little language can be found here:
 
 - [Part 1: Parsing Slow Loris](parts/1.md)
 - [Part 2: Evaluating Simple Expressions](parts/2.md)
