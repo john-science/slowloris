@@ -241,3 +241,21 @@ def test_calling_function_recursively():
 
     assert_equals(42, evaluate(parse("(my-fn 0)"), env))
     assert_equals(42, evaluate(parse("(my-fn 10)"), env))
+
+def test_let_functionality():
+    """Tests if functions can have sub-functions that are
+    namespace specific using the classic 'let' functionality."""
+
+    env = Environment()
+    evaluate(parse("""
+        (def summer 
+            (lambda (a b) 
+                (let plusr 
+                    (lambda (i j) 
+                        (+ i j)) 
+                        (plusr a b))))
+        """), env)
+
+    assert_equals(42, evaluate(parse("(summer 40 2)"), env))
+    with assert_raises(LispError):
+        evaluate(parse("(plusr 40 2)"), env)
