@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from copy import deepcopy
 from types import Environment, LispError, LispTypeError, Closure
 from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_number, is_string
 from asserts import assert_exp_length, assert_valid_definition, assert_boolean
@@ -26,6 +27,8 @@ def eval_list(ast, env):
         return eval_quote(ast, env)
     elif ast[0] == 'atom':
         return eval_atom(ast, env)
+    elif ast[0] == 'let':
+        return eval_let(ast, env)
     elif ast[0] == 'def':
         return eval_define(ast, env)
     elif ast[0] == 'lambda':
@@ -85,6 +88,13 @@ def eval_define(ast, env):
     env.set(ast[1], evaluate(ast[2], env))
 
     return ast[1]
+
+
+def eval_let(ast, env):
+    assert_valid_definition(ast[1:-1])
+    env.set(ast[1], evaluate(ast[2], env))
+
+    return evaluate(ast[3], env)
 
 
 def eval_empty(ast, env):
