@@ -30,7 +30,7 @@ def eval_list(ast, env):
     elif ast[0] == 'let':
         return eval_let(ast, env)
     elif ast[0] == 'def':
-        return eval_define(ast, env)
+        return eval_def(ast, env)
     elif ast[0] == 'lambda':
         return eval_lambda(ast, env)
     elif ast[0] == 'eq':
@@ -83,7 +83,7 @@ def eval_cons(ast, env):
     return [evaluate(ast[1], env)] + ls
 
 
-def eval_define(ast, env):
+def eval_def(ast, env):
     assert_valid_definition(ast[1:])
     env.set(ast[1], evaluate(ast[2], env))
 
