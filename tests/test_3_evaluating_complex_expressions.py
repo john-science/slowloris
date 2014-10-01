@@ -47,3 +47,16 @@ def test_if_with_sub_expressions():
             (+ 40 (- 3 1)))
     """)
     assert_equals(42, evaluate(if_expression, Environment()))
+
+def test_print():
+    """It is hard to capture standard out in a test, so this test will
+    just make sure that print statements don't kill the build."""
+
+    if_expression = parse("""
+        (print "Hey there, fly droog"
+            (if (> 1 2)
+                (- 1000 1)
+                (+ 40 (- 3 1))))
+    """)
+    assert_equals(42, evaluate(if_expression, Environment()))
+    

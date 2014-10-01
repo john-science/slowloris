@@ -25,6 +25,8 @@ def eval_list(ast, env):
     """A helper method, to evaluate the common list-form AST"""
     if ast[0] == 'quote':
         return eval_quote(ast, env)
+    elif ast[0] == 'print':
+        return eval_print(ast, env)
     elif ast[0] == 'atom':
         return eval_atom(ast, env)
     elif ast[0] == 'let':
@@ -90,13 +92,6 @@ def eval_def(ast, env):
     return ast[1]
 
 
-def eval_let(ast, env):
-    assert_valid_definition(ast[1:-1])
-    env.set(ast[1], evaluate(ast[2], env))
-
-    return evaluate(ast[3], env)
-
-
 def eval_empty(ast, env):
     assert_exp_length(ast, 2)
     ls = evaluate(ast[1], env)
@@ -150,6 +145,13 @@ def eval_lambda(ast, env):
     return Closure(env, ast[1], ast[2])
 
 
+def eval_let(ast, env):
+    assert_valid_definition(ast[1:-1])
+    env.set(ast[1], evaluate(ast[2], env))
+
+    return evaluate(ast[3], env)
+
+
 def eval_math(ast, env):
     """helper method to evaluate simple mathematical statements"""
     ops = {
@@ -172,6 +174,12 @@ def eval_math(ast, env):
         return ops[op](a, b)
     else:
         raise LispTypeError("Unsupported argument type for %s" % op)
+
+
+def eval_print(ast, env):
+    assert_exp_length(ast, 3)
+    print(ast[1])
+    return evaluate(ast[2], env)
 
 
 def eval_quote(ast, env):
