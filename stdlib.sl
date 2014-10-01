@@ -49,15 +49,13 @@
         (if (empty lst) '()
             (cons (f (head lst)) (map f (tail lst))))))
 
-;; TODO: I want to be able to put `reverse-acc` inside `reverse`.
-(def reverse-acc
-    (lambda (l1 acc)
-        (if (empty l1) acc
-            (reverse-acc (tail l1) (cons (head l1) acc)))))
-
 (def reverse
     (lambda (lst)
-        (reverse-acc lst '())))
+        (let reverse-acc
+            (lambda (l1 acc)
+                (if (empty l1) acc
+                    (reverse-acc (tail l1) (cons (head l1) acc))))
+        (reverse-acc lst '()))))
 
 (def range
     (lambda (start end)
@@ -95,22 +93,14 @@
             (if (> item (head lst)) (cons (head lst) (insert-into-ordered (tail lst) item))
                 (cons item lst)))))
 
-;; a single step in the Insert Sort algorithm
-(def insert-sort-acc
-    (lambda (sorted unsorted)
-        (if (empty unsorted) sorted
-            (insert-sort-acc (insert-into-ordered sorted (head unsorted)) (tail unsorted)))))
-
 ;; insert sort, build a progressively larger sorted list, from an unordered one
 (def insert-sort
     (lambda (lst)
+        (let insert-sort-acc
+            (lambda (sorted unsorted)
+                (if (empty unsorted) sorted
+                    (insert-sort-acc (insert-into-ordered sorted 
+                                    (head unsorted))
+                                    (tail unsorted))))
         (if (empty lst) '()
-            (insert-sort-acc (cons (head lst) '()) (tail lst)))))
-
-;; IDEAS
-;;
-;; list operations: list-first-n, list-last-n, list-slice, nth, split, flatmap, accumulate/fold
-;; set: an unsorted list object with setters that demand uniqueness
-;; dictionaries and arrays?
-;; str(), int(), float(), len(), exit(), raise?, try, except?
-;; sorts: merge sort
+            (insert-sort-acc (cons (head lst) '()) (tail lst))))))
