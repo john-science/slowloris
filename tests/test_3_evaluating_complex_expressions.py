@@ -53,10 +53,9 @@ def test_print():
     just make sure that print statements don't kill the build."""
 
     if_expression = parse("""
-        (print "Hey there, fly droog"
+        (print "Hey there, fly droog 2"
             (if (> 1 2)
                 (- 1000 1)
                 (+ 40 (- 3 1))))
     """)
     assert_equals(42, evaluate(if_expression, Environment()))
-    

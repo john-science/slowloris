@@ -141,16 +141,16 @@ def test_insert_sort():
         interpret("(insert-sort '(6 3 7 2 4 1 5))", env))
     assert_equals("()", interpret("'()", env))
 
-def test_string_append():
-    """'string_append' two strings to create a new string
+def test_str_append():
+    """'str_append' two strings to create a new string
     """
-    assert_equals('"hello world"', interpret('(string_append "hello " "world")'))
-    assert_equals('"#loveyou"', interpret('(string_append "#" "loveyou")'))
+    assert_equals('"hello world"', interpret('(str_append "hello " "world")'))
+    assert_equals('"#loveyou"', interpret('(str_append "#" "loveyou")'))
 
-def test_string_split():
-    """'string_split' a string into a list of strings
+def test_str_split():
+    """'str_split' a string into a list of strings
     """
     assert_equals("'" + '("slow" "loris" "is" "almost" "a" "language")',
-        interpret('(string_split "slow loris is almost a language" " ")'))
+        interpret('(str_split "slow loris is almost a language" " ")'))
     assert_equals("'" + '("rock" "lobster" "dinner")',
-        interpret('(string_split "rock lobster dinner" " ")'))
+        interpret('(str_split "rock lobster dinner" " ")'))
