@@ -109,4 +109,4 @@
 
 (def raise
     (lambda (str)
-        (print (str_append "LispError: " str) exit)))
+        (print (str_append "LispError: " str) (exit))))

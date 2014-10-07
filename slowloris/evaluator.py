@@ -12,6 +12,8 @@ operators = {}
 def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment."""
     if is_symbol(ast):
+        if ast[0] == '"':
+            return ast
         return env.lookup(ast)
     elif is_atom(ast):
         return ast
@@ -25,6 +27,8 @@ def eval_list(ast, env):
     """A helper method, to evaluate the common list-form AST"""
     if ast[0] == 'quote':
         return eval_quote(ast, env)
+    elif ast[0] == 'exit':
+        return eval_exit(ast, env)
     elif ast[0] == 'print':
         return eval_print(ast, env)
     elif ast[0] == 'atom':
@@ -49,7 +53,7 @@ def eval_list(ast, env):
         return eval_empty(ast, env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
         return eval_math(ast, env)
-    elif ast[0] in ['string_append', 'string_split']:
+    elif ast[0] in ['str_append', 'str_split']:
         return eval_string(ast, env)
     elif is_closure(ast[0]):
         return apply(ast, env)
@@ -117,6 +121,11 @@ def eval_eq(ast, env):
         return evaluate(ast[1], env) == evaluate(ast[2], env)
 
 
+def eval_exit(ast, env):
+    assert_exp_length(ast, 1)
+    exit()
+
+
 def eval_head(ast, env):
     assert_exp_length(ast, 2)
     ls = evaluate(ast[1], env)
@@ -178,7 +187,7 @@ def eval_math(ast, env):
 
 def eval_print(ast, env):
     assert_exp_length(ast, 3)
-    print(ast[1])
+    print(evaluate(ast[1], env))
     return evaluate(ast[2], env)
 
 
@@ -190,13 +199,14 @@ def eval_quote(ast, env):
 def eval_string(ast, env):
     """helper method to evaluate simple string operations"""
     ops = {
-        'string_append': lambda a, b: a[:-1] + b[1:],
-        'string_split': lambda a, b: "'" + '("' + '" "'.join(a[1:-1].split(b[1:-1])) + '")'
+        'str_append': lambda a, b: a[:-1] + b[1:],
+        'str_split': lambda a, b: "'" + '("' + '" "'.join(a[1:-1].split(b[1:-1])) + '")'
     }
     op = ast[0]
-    if is_string(ast[1]) and is_string(ast[2]):
-        return ops[op](ast[1], ast[2])
+    if is_string(ast[1]) and is_string(evaluate(ast[2], env)):
+        return ops[op](ast[1], evaluate(ast[2], env))
     else:
+        print 'last ast ', ast[1], ast[2]
         raise LispTypeError("Unsupported argument type for %s" % op)
 
 
