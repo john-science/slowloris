@@ -83,9 +83,9 @@ def parse_types_deep(ast):
 
 
 def remove_comments(source):
-    """Remove from a string anything in between a ; and a linebreak"""
+    """Remove from a string anything in between a # and a linebreak"""
 
-    return re.sub(r";.*\n", "\n", source)
+    return re.sub(r"#.*\n", "\n", source)
 
 
 def find_matching_paren(source, start=0):

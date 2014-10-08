@@ -1,4 +1,4 @@
-;; logical operators
+# logical operators
 
 (def not
     (lambda (b)
@@ -16,7 +16,7 @@
     (lambda (a b)
         (if a (if b False True) (if b True False))))
 
-;; list functions
+# list functions
 
 (def foldleft
     (lambda (f acc lst)
@@ -67,9 +67,9 @@
         (if (> start end) '()
             (cons start (range-step (+ step start) end step)))))
 
-;; list-sorting algorithms
+# list-sorting algorithms
 
-;; Quick Sort
+# Quick Sort
 (def smaller-or-equal-filter
     (lambda (lst pivot)
         (filter (lambda (v) (<= v pivot)) lst)))
@@ -85,15 +85,15 @@
                 (cons (head lst) '()))
                 (quick-sort (greater-filter (tail lst) (head lst)))))))
 
-;; Insert Sort
-;; inserts an item into an ordered list, preserving the order
+# Insert Sort
+# inserts an item into an ordered list, preserving the order
 (def insert-into-ordered
     (lambda (lst item)
         (if (empty lst) (cons item '())
             (if (> item (head lst)) (cons (head lst) (insert-into-ordered (tail lst) item))
                 (cons item lst)))))
 
-;; insert sort, build a progressively larger sorted list, from an unordered one
+#S insert sort, build a progressively larger sorted list, from an unordered one
 (def insert-sort
     (lambda (lst)
         (let insert-sort-acc

@@ -93,11 +93,11 @@ def test_parse_comments():
     """All comments should be stripped away as part of the parsing."""
 
     program = """
-    ;; this first line is a comment
+    # this first line is a comment
     (def variable
-        ; here is another comment
+        # here is another comment
         (if True 
-            42 ; inline comment!
+            42 # inline comment!
             (something else)))
     """
     expected_ast = ['def', 'variable', 
@@ -111,11 +111,11 @@ def test_parse_larger_example():
 
     program = """
         (define fact 
-        ;; Factorial function
+        # Factorial function
         (lambda (n) 
             (if (<= n 1) 
-                1 ; Factorial of 0 is 1, and we deny 
-                  ; the existence of negative numbers
+                1 # Factorial of 0 is 1, and we deny 
+                  # the existence of negative numbers
                 (* n (fact (- n 1))))))
     """
     ast = ['define', 'fact', 

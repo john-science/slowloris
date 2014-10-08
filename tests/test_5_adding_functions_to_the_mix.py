@@ -232,7 +232,7 @@ def test_calling_function_recursively():
     env = Environment()
     evaluate(parse("""
         (def my-fn
-            ;; A meaningless, but recursive, function
+            # A meaningless, but recursive, function
             (lambda (x)
                 (if (eq x 0)
                     42
