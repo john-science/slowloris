@@ -32,5 +32,9 @@ def interpret_file(filename, env=None):
         source = "".join(sourcefile.readlines())
 
     asts = parse_multiple(source)
+    imports = filter(lambda a: a[0] == 'import', asts)
+    asts = filter(lambda a: a[0] != 'import', asts)
     results = [evaluate(ast, env) for ast in asts]
+    for imp in imports:
+        interpret_file(imp[1][1:-1], env)
     return unparse(results[-1])

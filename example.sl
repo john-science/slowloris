@@ -5,7 +5,7 @@
 ;;    ./sl example.sl
 ;;
 
-(define fact 
+(def fact 
     ;; This is a Factorial function
     (lambda (n) 
         (if (eq n 0) 

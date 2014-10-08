@@ -105,8 +105,4 @@
         (if (empty lst) '()
             (insert-sort-acc (cons (head lst) '()) (tail lst))))))
 
-;; We need to be able to raise LispErrors
-
-(def raise
-    (lambda (str)
-        (print (str_append "LispError: " str) (exit))))
+(import "exceptions.sl")
