@@ -49,6 +49,10 @@ def eval_list(ast, env):
         return eval_head(ast, env)
     elif ast[0] == 'tail':
         return eval_tail(ast, env)
+    elif ast[0] == 'rhead':
+        return eval_rhead(ast, env)
+    elif ast[0] == 'rtail':
+        return eval_rtail(ast, env)
     elif ast[0] == 'empty':
         return eval_empty(ast, env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
@@ -194,6 +198,21 @@ def eval_print(ast, env):
 def eval_quote(ast, env):
     assert_exp_length(ast, 2)
     return ast[1]
+
+
+def eval_rhead(ast, env):
+    assert_exp_length(ast, 2)
+    ls = evaluate(ast[1], env)
+    if not is_list(ls):
+        raise LispError('The argument of rhead should be a list.')
+    elif len(ls) == 0:
+        raise LispError('And empty list has no reverse head.')
+    return ls[-1]
+
+
+def eval_rtail(ast, env):
+    lst = evaluate(ast[1], env)
+    return lst[:-1]
 
 
 def eval_string(ast, env):

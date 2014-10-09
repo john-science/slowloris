@@ -42,6 +42,11 @@ def test_getting_first_element_from_list():
     
     assert_equals(1, evaluate(parse("(head '(1 2 3 4 5))"), Environment()))
 
+def test_getting_last_element_from_list():
+    """`rhead` extracts the last element of a list."""
+    
+    assert_equals(5, evaluate(parse("(rhead '(1 2 3 4 5))"), Environment()))
+
 def test_getting_first_element_from_empty_list():
     """If the list is empty there is no first element, and `head should raise an error."""
 
@@ -56,6 +61,15 @@ def test_getting_tail_of_list():
     assert_equals("(2 3)", interpret("(tail '(1 2 3))", Environment()))
     assert_equals([2, 3], evaluate(parse("(tail '(1 2 3))"), Environment()))
     assert_equals([2, 3], evaluate(['tail', ['quote', [1, 2, 3]]], Environment()))
+
+def test_getting_tail_of_rlist():
+    """`tail` returns the reverse of the tail of the list.
+
+    That is all the elements except the last."""
+
+    assert_equals("(1 2)", interpret("(rtail '(1 2 3))", Environment()))
+    assert_equals([1, 2], evaluate(parse("(rtail '(1 2 3))"), Environment()))
+    assert_equals([1, 2], evaluate(['rtail', ['quote', [1, 2, 3]]], Environment()))
 
 def test_checking_whether_list_is_empty():
     """The `empty` form checks whether or not a list is empty."""
