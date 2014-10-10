@@ -22,7 +22,7 @@ def repl():
     print(faded("  use ^D to exit\n"))
 
     env = Environment()
-    interpret_file(join(dirname(relpath(__file__)), '..', 'stdlib.sl'), env)
+    interpret_file(join(dirname(relpath(__file__)), '..', 'stdlib', 'stdlib.sl'), env)
     while True:
         try:
             source = read_expression()

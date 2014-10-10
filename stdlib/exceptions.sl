@@ -1,5 +1,4 @@
-# This is an example file to prove that the 'import' feature is working.
-
+# including basic error and exception logic in Slow Loris
 
 # We need to be able to raise LispErrors
 
