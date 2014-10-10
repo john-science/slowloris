@@ -67,5 +67,5 @@
         (if (> start end) '()
             (cons start (range-step (+ step start) end step)))))
 
-(import "exceptions.sl")
-(import "sorting.sl")
+(import "stdlib/exceptions.sl")
+(import "stdlib/sorting.sl")
