@@ -1,6 +1,6 @@
 ## Slow Loris
 
-> A clone of DIY-LISP. The goal is to learn.
+> A simple, interpreted LISP, written in Python.
 
 ### What Slow Loris Is
 
@@ -9,12 +9,12 @@ A relatively simple, but neat language. Features include:
 - A handful of datatypes (integers, booleans and symbols)
 - Variables
 - First class functions with lexical scoping
+- Basic error handling
 - A nice, homemade-quality feeling
 
 Initially, it will *not* have:
 
 - A proper type system
-- Error handling
 - Good performance
 - And much, much more
 
