@@ -42,9 +42,9 @@ Before we get started, make sure you have installed [Python](http://www.python.o
 The full documentation to this little language can be found here:
 
 - [Part 1: Parsing Slow Loris](parts/1.md)
-- [Part 2: Evaluating Simple Expressions](parts/2.md)
-- [Part 3: Evaluating Complex Expressions](parts/3.md)
-- [Part 4: Variables](parts/4.md)
+- [Part 2: Evaluating Slow Loris](parts/2.md)
+- [Part 3: REPL](parts/3.md)
+- [Part 4: Variables and Types](parts/4.md)
 - [Part 5: Functions](parts/5.md)
 - [Part 6: Lists](parts/6.md)
 - [Part 7: The Standard Library](parts/7.md)
