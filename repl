@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from os.path import dirname, relpath, join
 import sys
 
 from slowloris.interpreter import interpret_file
 from slowloris.repl import repl
+from slowloris.types import Environment
 
 if len(sys.argv) > 1:
-    print interpret_file(sys.argv[1])
+    env = Environment()
+    interpret_file(join(dirname(relpath(__file__)), 'stdlib', 'stdlib.sl'), env)
+    print interpret_file(sys.argv[1], env)
 else:
     repl()
