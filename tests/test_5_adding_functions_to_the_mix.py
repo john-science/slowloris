@@ -253,7 +253,7 @@ def test_let_functionality():
                 (let plusr 
                     (lambda (i j) 
                         (+ i j)) 
-                        (plusr a b))))
+                (plusr a b))))
         """), env)
 
     assert_equals(42, evaluate(parse("(summer 40 2)"), env))
