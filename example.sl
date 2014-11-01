@@ -2,7 +2,7 @@
 
 # To execute the code:
 #
-#    ./sl example.sl
+#    ./repl example.sl
 #
 
 (def fact 
