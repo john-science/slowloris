@@ -194,7 +194,11 @@ def eval_math(ast, env):
 
 def eval_print(ast, env):
     assert_exp_length(ast, 3)
-    print(evaluate(ast[1], env))
+    s = evaluate(ast[1], env)
+    if type(s) == str and len(s) > 0 and s[0] == '"' and s[-1] == '"':
+        print(s[1: -1])
+    else:
+        print()
     return evaluate(ast[2], env)
 
 

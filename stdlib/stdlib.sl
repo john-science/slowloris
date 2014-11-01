@@ -1,3 +1,5 @@
+
+(import "stdlib/math.sl")
 (import "stdlib/logic.sl")
 (import "stdlib/lists.sl")
 (import "stdlib/exceptions.sl")

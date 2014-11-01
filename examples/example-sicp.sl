@@ -55,21 +55,6 @@
                 (mod (square (expmod base (/ exp 2) m)) m)
                 (mod (* base (expmod base (- exp 1) m)) m)))))
 
-# TODO: Move these 3 functions to std libs
-# TODO: Floor/ceiling doe not case to int... I need type casting.
-(def floor
-    (lambda (d)
-        (- d (mod d 1))))
-
-(def ceiling
-    (lambda (d)
-        (if (= d (floor d)) d
-            (+ d (- 1 (- d (floor d)))))))
-
-(def randint
-    (lambda (bottom top)
-        (floor (+ bottom (* (random) (- top bottom))))))
-
 (def fermat-test
     (lambda (n)
         (let try-it
@@ -83,8 +68,8 @@
             (if (fermat-test n) (fast-prime? n (- times 1))
                 False))))
 
-(print "Is 1709 prime?" '())
-(print (fast-prime? 1709 20) '())
+(print "Is 79 prime?" '())
+(print (fast-prime? 79 10) '())
 
 
 # General Equation for an Integral (pg 60)
@@ -120,7 +105,7 @@
                 (+ x dx))
         (* (int-sum f (+ a (/ dx 2.0)) add-dx b) dx))))
 
-# TODO: I seem to be printing the quotes around a string, but not \n characters.
+# TODO: I an not printing special \n characters correctly.
 (print "Integral of y=x^3 from 3 to 5" '())
 (print (integral cube 3 5 0.1) '())
 
@@ -136,7 +121,6 @@
 
 (print "Derivative of y=x^3 at x=3" '())
 (print (deriv cube 3) '())
-#(print (map cube '(1 3 5 9)) '())
 
 # Tree Reduce as a LISP Accumulate (pg 116)
 
@@ -162,5 +146,6 @@
         (accumulate plus 0 (map square (filter odd? (enumerate-tree tree))))))
 
 (print "Sum of Odd Squares" '())
-(print (sum-odd-squares square-tree) '())
+# TODO: Slow Loris needs type-checking to make enumerate-tree work?
+#(print (sum-odd-squares square-tree) '())
 
