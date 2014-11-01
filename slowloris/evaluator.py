@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from copy import deepcopy
+from random import random
 from asserts import assert_exp_length, assert_valid_definition, assert_boolean
 from ast import is_boolean, is_atom, is_symbol, is_list, is_closure, is_number, is_string
 from parser import unparse
@@ -28,7 +29,7 @@ def eval_list(ast, env):
     if ast[0] == 'quote':
         return eval_quote(ast, env)
     elif ast[0] == 'exit':
-        return eval_exit(ast, env)
+        return eval_exit(ast)
     elif ast[0] == 'print':
         return eval_print(ast, env)
     elif ast[0] == 'atom':
@@ -57,6 +58,8 @@ def eval_list(ast, env):
         return eval_empty(ast, env)
     elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
         return eval_math(ast, env)
+    elif ast[0] == 'random':
+        return eval_random()
     elif ast[0] in ['str_append', 'str_split']:
         return eval_string(ast, env)
     elif is_closure(ast[0]):
@@ -125,7 +128,7 @@ def eval_eq(ast, env):
         return evaluate(ast[1], env) == evaluate(ast[2], env)
 
 
-def eval_exit(ast, env):
+def eval_exit(ast):
     assert_exp_length(ast, 1)
     exit()
 
@@ -198,6 +201,10 @@ def eval_print(ast, env):
 def eval_quote(ast, env):
     assert_exp_length(ast, 2)
     return ast[1]
+
+
+def eval_random():
+    return random()
 
 
 def eval_rhead(ast, env):
