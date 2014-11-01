@@ -37,4 +37,8 @@ def interpret_file(filename, env=None):
     results = [evaluate(ast, env) for ast in asts]
     for imp in imports:
         interpret_file(imp[1][1:-1], env)
+
+    # If the Slow Loris file contains only comments or includes, don't fail.
+    if len(results) == 0:
+        return ''
     return unparse(results[-1])
