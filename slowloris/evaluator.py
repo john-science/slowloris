@@ -198,7 +198,7 @@ def eval_print(ast, env):
     if type(s) == str and len(s) > 0 and s[0] == '"' and s[-1] == '"':
         print(s[1: -1])
     else:
-        print()
+        print(s)
     return evaluate(ast[2], env)
 
 
