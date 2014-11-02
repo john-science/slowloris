@@ -25,7 +25,7 @@ def evaluate(ast, env):
 
 
 def eval_list(ast, env):
-    """A helper method, to evaluate the common list-form AST"""
+    """evaluate all the built-in functions"""
     if ast[0] == 'quote':
         return eval_quote(ast, env)
     elif ast[0] == 'exit':
@@ -60,6 +60,8 @@ def eval_list(ast, env):
         return eval_math(ast, env)
     elif ast[0] == 'random':
         return eval_random()
+    elif ast[0] in ['int', 'float', 'str', 'type']:
+        return eval_types(ast, env)
     elif ast[0] in ['str_append', 'str_split']:
         return eval_string(ast, env)
     elif is_closure(ast[0]):
@@ -230,16 +232,39 @@ def eval_string(ast, env):
     """helper method to evaluate simple string operations"""
     ops = {
         'str_append': lambda a, b: a[:-1] + b[1:],
+        'str_eq': lambda a, b: a == b,
         'str_split': lambda a, b: "'" + '("' + '" "'.join(a[1:-1].split(b[1:-1])) + '")'
     }
     op = ast[0]
     if is_string(ast[1]) and is_string(evaluate(ast[2], env)):
-        return ops[op](ast[1], evaluate(ast[2], env))
+        return ops[op](evaluate(ast[1], env), evaluate(ast[2], env))
     else:
-        print 'last ast ', ast[1], ast[2]
         raise LispTypeError("Unsupported argument type for %s" % op)
 
 
 def eval_tail(ast, env):
+    lst = evaluate(ast[1], env)
+    return lst[1:]
+
+
+def eval_types(ast, env):
+    """Deal with various type symbols"""
+    ops = {
+        'int': lambda a: int(a),
+        'float': lambda a: float(a),
+        'str': lambda a: str(a),
+        'type': lambda a: type(a)
+    }
+    op = ast[0]
+    a = evaluate(ast[1], env)
+    try:
+        return ops[op](a)
+    except:
+        raise LispTypeError("Unsupported argument type for %s" % op)
+    
+    print('JOHN! Do a try/except!')
+    exit()
+
+    
     lst = evaluate(ast[1], env)
     return lst[1:]

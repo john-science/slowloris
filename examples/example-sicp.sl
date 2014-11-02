@@ -145,7 +145,7 @@
     (lambda (tree)
         (accumulate plus 0 (map square (filter odd? (enumerate-tree tree))))))
 
-(print "Sum of Odd Squares" '())
+(print "Sum of Odd Squares" "TODO: incomplete")
 # TODO: Slow Loris needs type-checking to make enumerate-tree work?
 #(print (sum-odd-squares square-tree) '())
 
