@@ -6,7 +6,7 @@
 
 A relatively simple, but neat language. Features include:
 
-- A handful of datatypes (integers, booleans and symbols)
+- A handful of datatypes (integers, floats, booleans, strings and symbols)
 - Variables
 - First class functions with lexical scoping
 - Basic error handling
@@ -22,19 +22,19 @@ The syntax is that of the languages in the [Lisp family](parts/language.md):
 
 ```lisp
 (def fact 
-    ;; Factorial function
+    # Factorial function
     (lambda (n) 
         (if (eq n 0) 
-            1 ; Factorial of 0 is 1
+            1 # Factorial of 0 is 1
             (* n (fact (- n 1))))))
 
-;; When parsing the file, the last statement is returned
+# When parsing the file, the last statement is returned
 (fact 5)
 ```
 
 ### Prerequisites
 
-Before we get started, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
+To use Slow Loris, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
 *For long-term stabilibility, the language is based on Python 2.7.*
 
 ### API Documentation
