@@ -21,3 +21,9 @@
     (lambda (bottom top)
         (+ bottom (* (random) (- top bottom)))))
         
+# takes the absolute value of a number
+(def abs
+    (lambda (n)
+        (if (< n 0)
+            (* n -1)
+            n)))
