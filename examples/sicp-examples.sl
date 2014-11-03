@@ -1,5 +1,5 @@
 # Selected Examples from `Structure and Interpretation of Computer Programs`
-# (A wonderful text for new software engineers, and the best way to learn a LISP.)
+# (A wonderful text for new software engineers, and a great way to learn a LISP.)
 
 
 # Exponentiation - Simple Resursion [pg 44]
