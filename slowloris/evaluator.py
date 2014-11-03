@@ -56,7 +56,7 @@ def eval_list(ast, env):
         return eval_rtail(ast, env)
     elif ast[0] == 'empty':
         return eval_empty(ast, env)
-    elif ast[0] in ['+', '-', '*', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
+    elif ast[0] in ['+', '-', '*', '**', '/', 'mod', '<', '<=', '=', '!=', '>=', '>']:
         return eval_math(ast, env)
     elif ast[0] == 'random':
         return eval_random()
@@ -176,6 +176,7 @@ def eval_math(ast, env):
         '+': lambda a, b: a + b,
         '-': lambda a, b: a - b,
         '*': lambda a, b: a * b,
+        '**': lambda a, b: a ** b,
         '/': lambda a, b: a / b,
         'mod': lambda a, b: a % b,
         '<': lambda a, b: a < b,
@@ -261,10 +262,3 @@ def eval_types(ast, env):
         return ops[op](a)
     except:
         raise LispTypeError("Unsupported argument type for %s" % op)
-    
-    print('JOHN! Do a try/except!')
-    exit()
-
-    
-    lst = evaluate(ast[1], env)
-    return lst[1:]
