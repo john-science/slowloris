@@ -31,7 +31,6 @@
 
 
 # Euclid's Algorithm for finding Greatest Common Divisors (pg 49)
-
 (def gcd
     (lambda (a b)
         (if (= b 0)
@@ -43,7 +42,6 @@
 
 
 # Fermat's Primality Test (pg 51)
-
 (def square
     (lambda (n)
         (* n n)))
@@ -111,7 +109,6 @@
 
 
 # General Equation for Numeric Derivative (pg 74)
-
 (def DELTA 0.0000001)
 
 (def deriv
@@ -123,7 +120,6 @@
 (print (deriv cube 3) '())
 
 # Tree Reduce as a LISP Accumulate (pg 116)
-
 (def accumulate
     (lambda (op init seq)
         (if (empty seq)
@@ -143,9 +139,7 @@
 
 (def sum-odd-squares
     (lambda (tree)
-        (accumulate plus 0 (map square (filter odd? (enumerate-tree tree))))))
+        (accumulate plus 0 (map square (filter odd? (flatten tree))))))
 
-(print "Sum of Odd Squares" "TODO: incomplete")
-# TODO: Slow Loris needs type-checking to make enumerate-tree work?
-#(print (sum-odd-squares square-tree) '())
-
+(print "Sum of Odd Squares" '())
+(print (sum-odd-squares '(1 (2 3 (4 5) 6 (7 8 (9 10))))) '())
