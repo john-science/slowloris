@@ -7,7 +7,7 @@ from slowloris.interpreter import interpret, interpret_file
 from slowloris.types import Environment
 
 env = Environment()
-path = join(dirname(relpath(__file__)), '..', 'stdlib.sl')
+path = join(dirname(relpath(__file__)), '..', 'stdlib', 'stdlib.sl')
 interpret_file(path, env)
 
 """

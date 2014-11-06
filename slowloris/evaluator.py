@@ -42,6 +42,8 @@ def eval_list(ast, env):
         return eval_lambda(ast, env)
     elif ast[0] == 'eq':
         return eval_eq(ast, env)
+    elif ast[0] == 'set':
+        return eval_set(ast, env)
     elif ast[0] == 'if':
         return eval_if(ast, env)
     elif ast[0] == 'cons':
@@ -227,6 +229,12 @@ def eval_rhead(ast, env):
 def eval_rtail(ast, env):
     lst = evaluate(ast[1], env)
     return lst[:-1]
+
+
+def eval_set(ast, env):
+    assert_exp_length(ast, 3)
+    env.set_overwrite(ast[1], evaluate(ast[2], env))
+    return ast[1]
 
 
 def eval_string(ast, env):

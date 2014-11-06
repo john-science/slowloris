@@ -259,3 +259,14 @@ def test_let_functionality():
     assert_equals(42, evaluate(parse("(summer 40 2)"), env))
     with assert_raises(LispError):
         evaluate(parse("(plusr 40 2)"), env)
+
+def test_set_functionality():
+    """Tests if we can correctly reset the value of a
+    variable using `set`."""
+
+    env = Environment()
+    evaluate(parse("""(def xyz 123)"""), env)
+
+    assert_equals(123, evaluate(parse("xyz"), env))
+    evaluate(parse("""(set xyz 314)"""), env)
+    assert_equals(314, evaluate(parse("xyz"), env))

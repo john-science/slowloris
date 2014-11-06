@@ -52,3 +52,8 @@ class Environment:
         if symbol in self.variables:
             raise LispError('%s already defined' % str(symbol))
         self.variables[symbol] = value
+
+    def set_overwrite(self, symbol, value):
+        if symbol not in self.variables:
+            raise LispError('%s not defined' % str(symbol))
+        self.variables[symbol] = value
