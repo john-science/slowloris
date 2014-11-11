@@ -156,7 +156,6 @@ def eval_if(ast, env):
 
 def eval_lambda(ast, env):
     if len(ast) != 3:
-        # TODO: Fix this test. This is silly.
         raise LispError('Wrong number of arguments to lambda form')
 
     if not is_list(ast[1]):

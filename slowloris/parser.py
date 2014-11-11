@@ -29,41 +29,41 @@ def parse(source):
 
 def parse_text(source):
     """Recursive method to parse the Slow Loris text into an AST"""
-    # TODO: This seems clunky. Is it easily expandable? Is it easily readable?
+    # if type is list
     if type(source) == list:
         for i in range(len(source)):
             source[i] = parse_text(source[i])
         return source
-    else:  # type is str
-        if len(source) > 0 and source[0] == "'":
-            return ['quote', parse_text(source[1:])]
-        elif '(' in source:
-            start = source.find('(')
-            end = find_matching_paren(source, start)
-            if end == -1:
-                raise LispError("Incomplete expression: %s" % source[start:])
-            last = parse_text(source[end+1:])
-            if last:
-                return parse_text(split_exps(source[start+1: end])) + [last]
-            else:
-                return parse_text(split_exps(source[start+1: end]))
-        elif ')' in source:
-            raise LispError("Expected EOF")
+
+    # type is string
+    if len(source) > 0 and source[0] == "'":
+        return ['quote', parse_text(source[1:])]
+    elif '(' in source:
+        start = source.find('(')
+        end = find_matching_paren(source, start)
+        if end == -1:
+            raise LispError("Incomplete expression: %s" % source[start:])
+        last = parse_text(source[end+1:])
+        if last:
+            return parse_text(split_exps(source[start+1: end])) + [last]
         else:
-            return source.strip()
+            return parse_text(split_exps(source[start+1: end]))
+    elif ')' in source:
+        raise LispError("Expected EOF")
+    else:
+        return source.strip()
 
 
 def parse_type(src):
-    """convert a string to an implicit type, if it exists."""
-    # TODO: This seems clunky. Is it slow? Can I make it easier to extend to more types?
-    if src == 'False':
-        return False
-    elif src == 'True':
-        return True
-    elif src.isdigit():
+    """convert a string to an implicit type, if it exists"""
+    if src.isdigit():
         return int(src)
     elif is_decimal(src):
         return float(src)
+    elif src == 'False':
+        return False
+    elif src == 'True':
+        return True
 
     return src
 
