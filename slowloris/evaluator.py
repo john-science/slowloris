@@ -197,6 +197,7 @@ def eval_math(ast, env):
 
 
 def eval_print(ast, env):
+    """Allow Slow Loris to use the Python print to standard out"""
     assert_exp_length(ast, 3)
     s = evaluate(ast[1], env)
     if type(s) == str and len(s) > 0 and s[0] == '"' and s[-1] == '"':
@@ -207,11 +208,13 @@ def eval_print(ast, env):
 
 
 def eval_quote(ast, env):
+    """Evaluate a quoted list"""
     assert_exp_length(ast, 2)
     return ast[1]
 
 
 def eval_random():
+    """produce a pseudo-random float from 0.0 to 1.0"""
     return random()
 
 
