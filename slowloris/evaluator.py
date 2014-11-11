@@ -196,7 +196,6 @@ def eval_math(ast, env):
         raise LispTypeError("Unsupported argument type for %s" % op)
 
 
-# TODO: I an not printing special \n characters correctly.
 def eval_print(ast, env):
     """Allow Slow Loris to use the Python print to standard out"""
     assert_exp_length(ast, 3)
