@@ -103,7 +103,6 @@
                 (+ x dx))
         (* (int-sum f (+ a (/ dx 2.0)) add-dx b) dx))))
 
-# TODO: I an not printing special \n characters correctly.
 (print "Integral of y=x^3 from 3 to 5" '())
 (print (integral cube 3 5 0.1) '())
 
