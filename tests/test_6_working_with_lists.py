@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equals, assert_raises_regexp, \
-    assert_raises, assert_false, assert_is_instance
+from nose.tools import assert_equals, assert_raises, \
+    assert_false, assert_is_instance
 
 from slowloris.interpreter import interpret
 from slowloris.evaluator import evaluate

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equals, assert_raises_regexp, assert_raises
+from nose.tools import assert_equals, assert_raises
 
 from slowloris.parser import unparse, find_matching_paren
 from slowloris.types import LispError
@@ -31,7 +31,7 @@ def test_find_matching_paren_throws_exception_on_bad_initial_position():
 def test_find_matching_paren_throws_exception_on_no_closing_paren():
     """The function should raise error when there is no matching paren to be found"""
 
-    with assert_raises_regexp(LispError, "Incomplete expression"):
+    with assert_raises(LispError):
         find_matching_paren("string (without closing paren", 7)
 
 ## Tests for unparse in parser.py

@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equals, assert_raises_regexp, \
-    assert_raises, assert_true, assert_false, assert_is_instance
-
-# TODO: remove all instances of "assert_raises_regexp" and replace them with
-#       assert_raises. I don't want to be married to these print outs.
+from nose.tools import assert_equals, assert_raises, \
+    assert_true, assert_false, assert_is_instance
 
 from slowloris.interpreter import interpret
 from slowloris.ast import is_list
@@ -56,7 +53,7 @@ def test_lambda_arguments_are_lists():
 def test_lambda_number_of_arguments():
     """The `lambda` form should expect exactly two arguments."""
 
-    with assert_raises_regexp(LispError, "number of arguments"):
+    with assert_raises(LispError):
         evaluate(parse("(lambda (foo) (bar) (baz))"), Environment())
 
 def test_defining_lambda_with_error_in_body():
@@ -190,9 +187,9 @@ function calls are done incorrectly.
 def test_calling_atom_raises_exception():
     """A function call to a non-function should result in an error."""
 
-    with assert_raises_regexp(LispError, "not a function"):
+    with assert_raises(LispError):
         evaluate(parse("(True 'foo 'bar)"), Environment())
-    with assert_raises_regexp(LispError, "not a function"):
+    with assert_raises(LispError):
         evaluate(parse("(42)"), Environment())
 
 def test_make_sure_arguments_to_functions_are_evaluated():
@@ -215,8 +212,7 @@ def test_calling_with_wrong_number_of_arguments():
 
     env = Environment()
     evaluate(parse("(def fn (lambda (p1 p2) 'what_ever))"), env)
-    error_msg = "wrong number of arguments, expected 2 got 3"
-    with assert_raises_regexp(LispError, error_msg):
+    with assert_raises(LispError):
         evaluate(parse("(fn 1 2 3)"), env)
 
 

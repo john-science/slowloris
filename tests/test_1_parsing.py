@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equals, assert_raises_regexp
+from nose.tools import assert_equals, assert_raises
 
 from slowloris.parser import parse, unparse
 from slowloris.types import LispError
@@ -66,7 +66,7 @@ def test_parse_on_nested_list():
 def test_parse_exception_missing_paren():
     """The proper exception should be raised if the expresions is incomplete."""
 
-    with assert_raises_regexp(LispError, 'Incomplete expression'):
+    with assert_raises(LispError):
         parse('(foo (bar x y)')
 
 def test_parse_exception_extra_paren():
@@ -75,7 +75,7 @@ def test_parse_exception_extra_paren():
     The parse function expects to recieve only one single expression. Anything
     more than this, should result in the proper exception."""
 
-    with assert_raises_regexp(LispError, 'Expected EOF'):
+    with assert_raises(LispError):
         parse('(foo (bar x y)))')
 
 def test_parse_with_extra_whitespace():
