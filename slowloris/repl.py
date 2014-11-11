@@ -12,6 +12,7 @@ from interpreter import interpret, interpret_file
 # where it is supported (i.e. UNIX-y systems)
 import readline
 
+
 def repl():
     """Start the interactive Read-Eval-Print-Loop"""
     print("                 " + faded("                             \`.    T       "))
@@ -41,6 +42,7 @@ def repl():
             print(colored("! ", "red") + faded("The Python is showing through…"))
             print(faded("  " + str(e.__class__.__name__) + ":") + str(e))
 
+
 def read_expression():
     "Read from stdin until we have at least one s-expression"
 
@@ -54,6 +56,7 @@ def read_expression():
             break
 
     return exp.strip()
+
 
 def read_line(prompt):
     "Return touple of user input line and number of unclosed parens"
@@ -89,6 +92,7 @@ def colored(text, color, attr=None):
     reset = format % colors['reset']
 
     return color + attr + text + reset
+
 
 def faded(text):
     return colored(text, "grey", attr='bold')

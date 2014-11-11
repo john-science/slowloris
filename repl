@@ -11,6 +11,6 @@ from slowloris.types import Environment
 if len(sys.argv) > 1:
     env = Environment()
     interpret_file(join(dirname(relpath(__file__)), 'stdlib', 'stdlib.sl'), env)
-    print interpret_file(sys.argv[1], env)
+    print(interpret_file(sys.argv[1], env))
 else:
     repl()

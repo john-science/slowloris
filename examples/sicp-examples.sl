@@ -119,6 +119,7 @@
 (print "Derivative of y=x^3 at x=3" '())
 (print (deriv cube 3) '())
 
+
 # Tree Reduce as a LISP Accumulate (pg 116)
 (def accumulate
     (lambda (op init seq)
@@ -143,3 +144,6 @@
 
 (print "Sum of Odd Squares" '())
 (print (sum-odd-squares '(1 (2 3 (4 5) 6 (7 8 (9 10))))) '())
+
+
+(def
