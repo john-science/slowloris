@@ -4,9 +4,9 @@
 
 ### What Slow Loris Is
 
-A relatively simple, but neat language. Features include:
+A relatively simple, but fun language. Features include:
 
-- A handful of datatypes (integers, floats, booleans, strings and symbols)
+- A handful of datatypes (integers, floats, booleans, strings, and symbols)
 - Variables
 - First class functions with lexical scoping
 - Basic error handling
@@ -35,7 +35,7 @@ The syntax is that of the languages in the [Lisp family](parts/language.md):
 ### Prerequisites
 
 To use Slow Loris, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
-*For long-term stabilibility, the language is based on Python 2.7.*
+*For long-term stabilibility, the language is based on Python 2.7. No other Python version will be tested.*
 
 ### API Documentation
 
