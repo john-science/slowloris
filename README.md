@@ -4,9 +4,9 @@
 
 ### What Slow Loris Is
 
-A relatively simple, but fun language. Features include:
+A simple, but fun language. Features include:
 
-- A handful of datatypes (integers, floats, booleans, strings, and symbols)
+- A handful of data types (integers, floats, booleans, strings, and symbols)
 - Variables
 - First class functions with lexical scoping
 - Basic error handling
@@ -16,9 +16,10 @@ Initially, it will *not* have:
 
 - A proper type system
 - Good performance
+- keyword function arguments
 - And much, much more
 
-The syntax is that of the languages in the [Lisp family](parts/language.md):
+The [syntax](parts/language.md) is in the Lisp family:
 
 ```lisp
 (def fact 
