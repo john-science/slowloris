@@ -36,7 +36,7 @@ The [syntax](parts/language.md) is in the Lisp family:
 ### Prerequisites
 
 To use Slow Loris, make sure you have installed [Python](http://www.python.org/), [Pip](https://pypi.python.org/pypi/pip), and Nose (pip install nose). 
-*For long-term stabilibility, the language is based on Python 2.7. No other Python version will be tested.*
+*Slow Loris is based on Python 2.7, because the `ast` standard library is wildly inferior in Python 3.*
 
 ### API Documentation
 
