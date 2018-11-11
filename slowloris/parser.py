@@ -9,7 +9,7 @@ This is the parser module, with the `parse` function which you'll implement as p
 the workshop. Its job is to convert strings into data structures that the evaluator can
 understand.
 """
-
+decos = []
 
 def parse(source):
     """Parse string representation of one *single* expression
@@ -20,10 +20,17 @@ def parse(source):
 
     # create the AST from the Slow Loris text
     ast = parse_text(source)
-
+    #print("ast__", ast)
     # parse the AST into the various possible types
     ast = parse_types_deep(ast)
-
+    decos.append('inc')
+    #print("ast_deep", ast)
+    if ast[0] == 'power_2':
+        print("biw biw")
+        new_ast = ['inc']
+        new_ast.append(ast)
+        print("new_ast ==>", new_ast)
+        return new_ast
     return ast
 
 
@@ -121,6 +128,13 @@ def split_exps(source):
     while rest:
         exp, rest = first_expression(rest)
         exps.append(exp)
+
+    # if '@' in exps[1:]:
+    #     raise LispError('no nested decorator ')
+    #
+    # if '@' in exps[0]:
+    #     exps[0] = exps[0][1:]
+
     return exps
 
 
