@@ -3,13 +3,16 @@
 import re
 from ast import is_boolean, is_list, is_decimal
 from types import LispError
+import collections
 
 """
 This is the parser module, with the `parse` function which you'll implement as part 1 of
 the workshop. Its job is to convert strings into data structures that the evaluator can
 understand.
 """
-decos = []
+# a dict that associates each method with its decorator
+decorators = dict()
+
 
 def parse(source):
     """Parse string representation of one *single* expression
@@ -20,17 +23,36 @@ def parse(source):
 
     # create the AST from the Slow Loris text
     ast = parse_text(source)
-    #print("ast__", ast)
+    # detect decorators
+    ast = parse_deco(ast)
     # parse the AST into the various possible types
     ast = parse_types_deep(ast)
-    decos.append('inc')
-    #print("ast_deep", ast)
-    if ast[0] == 'power_2':
-        print("biw biw")
-        new_ast = ['inc']
-        new_ast.append(ast)
-        print("new_ast ==>", new_ast)
-        return new_ast
+    # change the AST if there is a decorator associated with the method
+
+
+    try:
+        if ast:
+            if ast[0] in decorators:
+                associated_decorator = decorators[ast[0]]
+                new_ast = [associated_decorator]
+                new_ast.append(ast)
+                return new_ast
+            #print("it is iterable !!!")
+    except TypeError:
+        #print("it is iterable !!! :)")
+        return  ast
+
+    return  ast
+def parse_deco(ast):
+    """ method that detects decorator and associate each method with its specified decorator """
+    print("ast :::", ast)
+    if ast:
+        if '@' == ast[0][0] and len(ast[0]) >= 4:
+            decorator = ast[0][1:]
+            to_be_decorated = ast[1][1]
+            decorators[to_be_decorated] = decorator
+            return ast[1]
+
     return ast
 
 

@@ -37,10 +37,11 @@ def test_decorator():
     (lambda (n)
         (+ n 1)))
     """
-    program2 = """
+    program2 = """(@inc
     (def power_2
     (lambda (n)
         (* n n)))
+        )
     """
     env = Environment()
     first_ast = parse(program1)
@@ -49,14 +50,7 @@ def test_decorator():
     second_closure = evaluate(second_ast, env)
 
     third_ast = parse("(power_2 3)")
-    #print("third_ast ::", third_ast)
-    #new_ast = ['inc']
-    #new_ast.append(third_ast)
-    #print("new_ast :::", new_ast)
-    #assert_equals(1, evaluate(parse("(inc 0)"), env))
-    #assert_equals(9, evaluate(parse("(power_2 3)"), env))
     assert_equals(10, evaluate(third_ast, env))
 
-    #print(env.variables)
 
 test_decorator()
