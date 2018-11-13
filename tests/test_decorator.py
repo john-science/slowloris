@@ -46,8 +46,8 @@ def test_decorator():
     env = Environment()
     first_ast = parse(program1)
     second_ast = parse(program2)
-    first_closure = evaluate(first_ast, env)
-    second_closure = evaluate(second_ast, env)
+    evaluate(first_ast, env)
+    evaluate(second_ast, env)
 
     third_ast = parse("(power_2 3)")
     assert_equals(10, evaluate(third_ast, env))

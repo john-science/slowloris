@@ -3,7 +3,6 @@
 import re
 from ast import is_boolean, is_list, is_decimal
 from types import LispError
-import collections
 
 """
 This is the parser module, with the `parse` function which you'll implement as part 1 of
@@ -28,8 +27,12 @@ def parse(source):
     # parse the AST into the various possible types
     ast = parse_types_deep(ast)
     # change the AST if there is a decorator associated with the method
+    ast = generate_new_ast(ast)
+
+    return ast
 
 
+def generate_new_ast(ast):
     try:
         if ast:
             if ast[0] in decorators:
@@ -37,15 +40,14 @@ def parse(source):
                 new_ast = [associated_decorator]
                 new_ast.append(ast)
                 return new_ast
-            #print("it is iterable !!!")
     except TypeError:
-        #print("it is iterable !!! :)")
-        return  ast
+        return ast
 
-    return  ast
+    return ast
+
+
 def parse_deco(ast):
     """ method that detects decorator and associate each method with its specified decorator """
-    print("ast :::", ast)
     if ast:
         if '@' == ast[0][0] and len(ast[0]) >= 4:
             decorator = ast[0][1:]
