@@ -33,6 +33,9 @@ def parse(source):
 
 
 def generate_new_ast(ast):
+    """
+    a method to generate a new AST if there is a decorator associated with current method
+    """
     try:
         if ast:
             if ast[0] in decorators:

@@ -1,37 +1,13 @@
 from nose.tools import assert_equals, assert_raises
 from slowloris.evaluator import evaluate
-from slowloris.parser import parse, unparse
-from slowloris.types import LispError
-from slowloris.types import Closure, LispError, Environment
+from slowloris.parser import parse
+from slowloris.types import Environment, LispError
 
 
 def test_decorator():
     """
-    Tests that decorator feature works
+    Simple test case of decorator
     """
-
-    # deco = """
-    # (def some_decor
-    # (lambda (n)
-    #     (+ n 1)))
-    # """
-    # env = Environment()
-    # closure = evaluate(parse(deco), env)
-    #
-    # program = """
-    #  (@some_decor
-    #  (def cube
-    #  (lambda (n)
-    #      (* n n n))))
-    #
-    #  """
-    # expected_ast = ['@some_decor',
-    #                 ['def', 'cube', ['lambda', ['n'], ['*', 'n', 'n', 'n']]]]
-
-    # parsed_program = parse(program)
-    # assert_equals(expected_ast, parsed_program)
-    # #
-    # evaluate(parsed_program, env)
     program1 = """
     (def inc
     (lambda (n)
@@ -53,4 +29,19 @@ def test_decorator():
     assert_equals(10, evaluate(third_ast, env))
 
 
-test_decorator()
+def test_undefined_decorator():
+
+    program2 = """(@inc
+    (def power_2
+    (lambda (n)
+        (* n n)))
+        )
+    """
+
+    env = Environment()
+    second_ast = parse(program2)
+    evaluate(second_ast, env)
+    third_ast = parse("(power_2 3)")
+    with assert_raises(LispError):
+        assert_equals(10, evaluate(third_ast, env))
+
