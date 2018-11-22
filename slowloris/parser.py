@@ -9,6 +9,8 @@ This is the parser module, with the `parse` function which you'll implement as p
 the workshop. Its job is to convert strings into data structures that the evaluator can
 understand.
 """
+# a dict that associates each method with its decorator
+decorators = dict()
 
 
 def parse(source):
@@ -20,9 +22,41 @@ def parse(source):
 
     # create the AST from the Slow Loris text
     ast = parse_text(source)
-
+    # detect decorators
+    ast = parse_deco(ast)
     # parse the AST into the various possible types
     ast = parse_types_deep(ast)
+    # change the AST if there is a decorator associated with the method
+    ast = generate_new_ast(ast)
+
+    return ast
+
+
+def generate_new_ast(ast):
+    """
+    a method to generate a new AST if there is a decorator associated with current method
+    """
+    try:
+        if ast:
+            if ast[0] in decorators:
+                associated_decorator = decorators[ast[0]]
+                new_ast = [associated_decorator]
+                new_ast.append(ast)
+                return new_ast
+    except TypeError:
+        return ast
+
+    return ast
+
+
+def parse_deco(ast):
+    """ method that detects decorator and associate each method with its specified decorator """
+    if ast:
+        if '@' == ast[0][0] and len(ast[0]) >= 4:
+            decorator = ast[0][1:]
+            to_be_decorated = ast[1][1]
+            decorators[to_be_decorated] = decorator
+            return ast[1]
 
     return ast
 
@@ -121,6 +155,13 @@ def split_exps(source):
     while rest:
         exp, rest = first_expression(rest)
         exps.append(exp)
+
+    # if '@' in exps[1:]:
+    #     raise LispError('no nested decorator ')
+    #
+    # if '@' in exps[0]:
+    #     exps[0] = exps[0][1:]
+
     return exps
 
 
