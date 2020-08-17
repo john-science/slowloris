@@ -3,11 +3,12 @@
 
 from os.path import dirname, relpath, join
 import sys
-
 from slowloris.interpreter import interpret_file
 from slowloris.repl import repl
-from slowloris.types import Environment
+from slowloris.sl_types import Environment
 
+
+# if a file path is supplied, execute that code, otherwise start the REPL
 if len(sys.argv) > 1:
     env = Environment()
     interpret_file(join(dirname(relpath(__file__)), 'stdlib', 'stdlib.sl'), env)

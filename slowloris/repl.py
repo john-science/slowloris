@@ -4,7 +4,7 @@ import os
 import sys
 from os.path import dirname, relpath, join
 
-from types import LispError, Environment
+from sl_types import LispError, Environment
 from parser import remove_comments
 from interpreter import interpret, interpret_file
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from types import LispError
+from sl_types import LispError
 from parser import unparse
 
 
