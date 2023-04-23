@@ -6,7 +6,7 @@
 
 A simple, but fun language. Features include:
 
-- A handful of data types (integers, floats, booleans, strings, and symbols)
+- A handful of data types (integers, floats, booleans, strings, and lists)
 - Variables
 - First class functions with lexical scoping
 - Basic error handling
